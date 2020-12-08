@@ -5,6 +5,7 @@ export const MainPageLayout = styled.div`
   min-height: 100vh;
   height: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   background-color: #1e3a63;
