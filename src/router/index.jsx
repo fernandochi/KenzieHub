@@ -1,17 +1,21 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import Profile from "../components/profile";
-import Login from "../components/login";
-import Technologies from "../components/technologies";
-import UserRegistration from "../components/userRegistration";
-import Portifolio from "../components/portfolio";
-import Users from "../components/users";
-import UsersList from "../components/usersList";
+import Profile from "../pages/profile";
+import Login from "../pages/login";
+import Technologies from "../pages/technologies";
+import UserRegistration from "../pages/userRegistration";
+import Portifolio from "../pages/portfolio";
+import Users from "../pages/users";
+import UsersList from "../pages/usersList";
+import HomePage from "../pages/homePage";
 
 const MainRoutes = () => {
   return (
     <Switch>
+      <Route exact path="/">
+        <HomePage />
+      </Route>
       <Route path="/login">
         <Login />
       </Route>
@@ -27,10 +31,10 @@ const MainRoutes = () => {
       <Route path="/user-registration">
         <UserRegistration />
       </Route>
-      <Route path="/users">
+      <Route exact path="/users">
         <Users />
       </Route>
-      <Route path="/users-list">
+      <Route exact path="/users-list">
         <UsersList />
       </Route>
     </Switch>
