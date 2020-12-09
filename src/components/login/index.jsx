@@ -3,10 +3,33 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import tryLoginThunk from "../../store/modules/login/thunks";
+
+//verificar state global \/
+import { useSelector } from "react-redux";
 
 const Login_form = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  //verificar state global \/
+  const usertest = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("token");
+    if (!token) {
+      return;
+    }
+    //verificar state global \/
+    console.log(usertest);
+
+    const user = JSON.parse(window.localStorage.getItem("user"));
+    dispatch(tryLoginThunk(user));
+    history.push("/profile");
+  }, []);
+
   const schema = yup.object().shape({
     email: yup.string().required("Campo necessário."),
     password: yup.string().required("Campo necessário."),
@@ -21,8 +44,9 @@ const Login_form = () => {
       .post("https://kenziehub.me/sessions", { ...data })
       .then((res) => {
         window.localStorage.setItem("token", res.data.token);
+        window.localStorage.setItem("user", JSON.stringify(res.data.user));
+        dispatch(tryLoginThunk(res.data.user));
         history.push("/profile");
-        console.log(res);
       })
       .catch((err) => setAuthentication(false));
   };
