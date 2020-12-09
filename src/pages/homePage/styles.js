@@ -10,14 +10,24 @@ export const MainPageLayout = styled.div`
   align-items: center;
   background-color: #1e3a63;
 
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+      color: whitesmoke;
+      font-size: 5rem;
+    }
+  }
+
   header {
-      width: 100%;
-      min-height: 10vh;
-      height: 10%;
-      display: flex;
-      position: absolute;
-      top: 0;
-      background-color: #b4d2ba;       
+    width: 100%;
+    min-height: 10vh;
+    height: 10%;
+    display: flex;
+    position: absolute;
+    top: 0;
+    background-color: #b4d2ba;
   }
 
   footer {
