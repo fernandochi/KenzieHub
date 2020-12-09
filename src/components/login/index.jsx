@@ -5,7 +5,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
-const Login = () => {
+const Login_form = () => {
   const history = useHistory();
   const schema = yup.object().shape({
     email: yup.string().required("Campo necessário."),
@@ -20,8 +20,8 @@ const Login = () => {
     axios
       .post("https://kenziehub.me/sessions", { ...data })
       .then((res) => {
-        // window.localStorage.setItem("token", res.data.token);
-        // history.push para o perfil
+        window.localStorage.setItem("token", res.data.token);
+        // history.push("/perfil") para o perfil
         console.log(res);
       })
       .catch((err) => setAuthentication(false));
@@ -46,4 +46,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login_form;
