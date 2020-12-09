@@ -21,7 +21,7 @@ const Login_form = () => {
       .post("https://kenziehub.me/sessions", { ...data })
       .then((res) => {
         window.localStorage.setItem("token", res.data.token);
-        // history.push("/perfil") para o perfil
+        history.push("/profile");
         console.log(res);
       })
       .catch((err) => setAuthentication(false));
