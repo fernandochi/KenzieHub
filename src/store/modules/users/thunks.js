@@ -1,7 +1,12 @@
 import axios from "axios";
-
-export const getUsersThunk = (page, perPage) => (dispatch, _getState) => {
+import { getUsers } from "./actions";
+export const getUsersThunk = (perPage, page) => (dispatch, _getState) => {
   axios
-    .get(`https://kenziehub.me//users?perPage=${perPage}&page=${page}`)
-    .then((res) => console.log(res));
+    .get(`https://kenziehub.me/users?perPage=${perPage}&page=${page}`)
+    .then((res) => {
+      console.log("oi");
+      console.log(res);
+      dispatch(getUsers(res.data));
+    })
+    .catch((err) => console.error(err));
 };
