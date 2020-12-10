@@ -1,5 +1,6 @@
 import { Modal, Button } from "antd";
 import { useState } from "react";
+import { RightColorButtons } from "./styles";
 
 const ProjectDetails = () => {
   const [visible, setVisible] = useState(false);

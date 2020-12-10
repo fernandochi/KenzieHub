@@ -11,7 +11,7 @@ const HomePage = () => {
         <img
           src="./images/kenzie_logo.png"
           alt="Kenzie Academy logo"
-          width="170px"
+          width="250px"
         />
       </div>
       <footer>

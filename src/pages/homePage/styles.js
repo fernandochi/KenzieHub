@@ -7,13 +7,13 @@ export const MainPageLayout = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
   background-color: #1e3a63;
 
   div {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 6%;
     h1 {
       color: whitesmoke;
       font-size: 5rem;
@@ -37,7 +37,7 @@ export const MainPageLayout = styled.div`
     display: flex;
     flex-wrap: nowrap;
     position: absolute;
-    bottom: 0;
+    bottom: 8%;
     margin: 8px;
   }
 `;
