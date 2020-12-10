@@ -17,7 +17,7 @@ const Menu = () => {
 
   const handlUser = () => {
     if (token) {
-      return history.push("/users");
+      return history.push("/users/10/1");
     }
     history.push("/users-list");
   };
