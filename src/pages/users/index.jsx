@@ -4,6 +4,7 @@ import { Pagination } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
+import CardUsers from "../../components/cardUsers";
 const User = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -22,6 +23,9 @@ const User = () => {
   console.log(total);
   return (
     <>
+      {total.map((item, idx) => (
+        <CardUsers userList={item} key={idx} out />
+      ))}
       <Pagination
         current={params.page}
         total={total.length}

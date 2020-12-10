@@ -14,7 +14,7 @@ const tabList = [
   },
 ];
 
-const CardUsers = ({ userList }) => {
+const CardUsers = ({ userList, out = false }) => {
   const [key, setKey] = useState("Works");
 
   const contentList = {
@@ -22,7 +22,7 @@ const CardUsers = ({ userList }) => {
     Techs: <p>{JSON.stringify(userList.techs)}</p>,
   };
 
-  onTabChange = (key, type) => {
+  const onTabChange = (key, type) => {
     console.log(key, type);
     setKey(key);
   };
@@ -35,29 +35,25 @@ const CardUsers = ({ userList }) => {
         description={userList.bio}
       />
 
-      <Card
-        style={{ marginTop: 10 }}
-        type="inner"
-        title="Inner Card title"
-        extra={<a href="#">More</a>}
-      >
+      <Card style={{ marginTop: 10 }} type="inner" title="Inner Card title">
         <ul>
           <li>Email: {userList.email}</li>
           <li>Course Module: {userList.course_module}</li>
           <li>Contact: {userList.contact}</li>
         </ul>
       </Card>
-      <Card
-        style={{ width: "100%" }}
-        extra={<a href="#">More</a>}
-        tabList={tabList}
-        activeTabKey={key}
-        onTabChange={(key) => {
-          onTabChange(key, "key");
-        }}
-      >
-        {contentList[key]}
-      </Card>
+      {out && (
+        <Card
+          style={{ width: "100%" }}
+          tabList={tabList}
+          activeTabKey={key}
+          onTabChange={(key) => {
+            onTabChange(key, "key");
+          }}
+        >
+          {contentList[key]}
+        </Card>
+      )}
     </Card>
   );
 };
