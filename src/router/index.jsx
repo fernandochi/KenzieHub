@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -12,10 +12,15 @@ import UsersList from "../pages/usersList";
 import HomePage from "../pages/homePage";
 import Portfolio from "../pages/portfolio";
 
+import { useDispatch, useSelector } from "react-redux";
+import { isTokenThunk } from "../store/modules/token/thunks";
+
 const MainRoutes = () => {
+  const dispatch = useDispatch();
+  const isAuthorized = useSelector((state) => state.booleanToken);
+
   const location = useLocation();
   const history = useHistory();
-  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -26,15 +31,13 @@ const MainRoutes = () => {
         })
         .then((data) => {
           console.log(data);
-          setIsAuthorized(true);
+          dispatch(isTokenThunk(true));
         })
         .catch(() => {
-          setIsAuthorized(false);
-          localStorage.clear();
+          dispatch(isTokenThunk(false));
         });
     } else {
-      localStorage.clear();
-      setIsAuthorized(false);
+      dispatch(isTokenThunk(false));
     }
   }, [location.pathname]);
 
