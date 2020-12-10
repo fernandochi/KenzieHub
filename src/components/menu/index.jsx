@@ -46,7 +46,7 @@ const Menu = () => {
             <MenuLi onClick={(event) => handlePath(event, "profile")}>
               Edição de Perfil
             </MenuLi>
-            <MenuLi onClick={(event) => handlePath(event, "portifolio")}>
+            <MenuLi onClick={(event) => handlePath(event, "portfolio")}>
               Portfólio
             </MenuLi>
             <MenuLi onClick={(event) => handlePath(event, "technologies")}>
