@@ -24,19 +24,23 @@ const MainRoutes = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
+    if (isAuthorized) {
       axios
         .get("https://kenziehub.me/profile", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((data) => {
           dispatch(isTokenThunk(true));
+          return;
         })
         .catch(() => {
           dispatch(isTokenThunk(false));
+          return;
         });
     } else {
+      console.log("termino");
       dispatch(isTokenThunk(false));
+      return;
     }
   }, [location.pathname]);
 
@@ -45,10 +49,10 @@ const MainRoutes = () => {
       <Route exact path="/">
         <HomePage />
       </Route>
-      <Route path="/login">
+      <Route exact path="/login">
         <Login />
       </Route>
-      <Route path="/user-registration">
+      <Route exact path="/user-registration">
         <UserRegistration />
       </Route>
       <Route exact path="/users-list">

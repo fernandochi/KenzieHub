@@ -3,53 +3,72 @@ import { getUsersThunk } from "../../store/modules/users/thunks";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import CardUsers from "../../components/cardUsers";
 const User = () => {
   const params = useParams();
-  const [page, setPage] = useState(Number(params.page));
-  const [perPage, setPerPage] = useState(Number(params.perPage));
+  const [page, setPage] = useState(params.page);
+  const [perPage, setPerPage] = useState(params.perPage);
+  const [search, setSearch] = useState("");
+  const [thereAreUsers, setThereAreUsers] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const total = useSelector((state) => state.userList);
+  const nextUrl = useSelector((state) => state.nextUrl);
+
+  const thereAreMoreUsers = () => {
+    axios
+      .get(nextUrl)
+      .then((response) => {
+        console.log("tudo OK", response);
+        if (response.data.length === 0) {
+          console.log("tem zero usuários na próxima página");
+          return setThereAreUsers(true);
+        }
+        setThereAreUsers(false);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
-    if (total.length === 0) {
-      console.log("até");
-      setPage(page - 1);
-      dispatch(getUsersThunk(params.perPage, page - 1));
-    }
-    dispatch(getUsersThunk(params.perPage, params.page));
-  }, [params]);
+    thereAreMoreUsers();
+    dispatch(getUsersThunk(perPage, page, search));
+  }, [page, perPage, search, nextUrl]);
 
   const previousPage = () => {
-    console.log("previous");
-    if (page === 1) {
+    if (page === "1") {
       return;
     }
-    setPage(page - 1);
-    history.push(`/users/${perPage}/${page - 1}`);
+    setPage(String(Number(page) - 1));
+    history.push(`/users/${perPage}/${String(Number(page) - 1)}`);
   };
 
   const nextPage = () => {
-    if (total.length !== perPage) {
-      return previousPage();
-    }
-    setPage(page + 1);
-    history.push(`/users/${perPage}/${page + 1}`);
+    setPage(String(Number(page) + 1));
+    history.push(`/users/${perPage}/${String(Number(page) + 1)}`);
   };
 
   const handlePage = (e) => {
     setPerPage(e.target.value);
-    history.push(`/users/${e.target.value}/${page}`);
+    history.push(`/users/${perPage}/${page}`);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log(search);
+    // history.push(`/users/${perPage}/${page}/${search}`);
   };
 
   return (
     <>
+      <form onSubmit={handleSearch}>
+        <input type="text" onChange={(e) => setSearch(e.target.value)} />
+      </form>
       <form onSubmit={(e) => e.preventDefault()}>
         <div>
           <button onClick={previousPage}>`{"<"}`</button>
           {page}
-          <button disabled={!!total.length ? false : true} onClick={nextPage}>
+          <button disabled={thereAreUsers} onClick={nextPage}>
             `{">"}`
           </button>
         </div>

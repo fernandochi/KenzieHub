@@ -1,9 +1,16 @@
 import axios from "axios";
-import { getUsers } from "./actions";
-export const getUsersThunk = (perPage, page) => (dispatch, _getState) => {
+import { getUsers, nextUrl } from "./actions";
+export const getUsersThunk = (perPage, page, tech = "") => (
+  dispatch,
+  _getState
+) => {
   axios
-    .get(`https://kenziehub.me/users?perPage=${perPage}&page=${page}`)
+    .get(
+      `https://kenziehub.me/users?perPage=${perPage}&page=${page}&tech=${tech}`
+    )
     .then((res) => {
+      console.log(res.headers.nexturl);
+      dispatch(nextUrl(res.headers.nexturl));
       dispatch(getUsers(res.data));
     })
     .catch((err) => console.error(err));
