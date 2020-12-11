@@ -46,10 +46,10 @@ const MainRoutes = () => {
       <Route exact path="/">
         <HomePage />
       </Route>
-      <Route path="/login">
+      <Route exact path="/login">
         <Login />
       </Route>
-      <Route path="/user-registration">
+      <Route exact path="/user-registration">
         <UserRegistration />
       </Route>
       <Route exact path="/users-list">
@@ -57,7 +57,7 @@ const MainRoutes = () => {
       </Route>
       <Route
         exact
-        path="/users"
+        path="/users/:perPage/:page"
         render={(props) =>
           isAuthorized ? (
             <Users {...props} />
