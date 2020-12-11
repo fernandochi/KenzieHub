@@ -7,10 +7,43 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import tryLoginThunk from "../../store/modules/login/thunks";
 
+import { Form, Input, Button } from "antd";
+
 //verificar state global \/
 import { useSelector } from "react-redux";
 
 import { isTokenThunk } from "../../store/modules/token/thunks";
+
+const formItemLayout = {
+  labelCol: {
+    xs: {
+      span: 7,
+    },
+    sm: {
+      span: 4,
+    },
+  },
+  wrapperCol: {
+    xs: {
+      span: 7,
+    },
+    sm: {
+      span: 5,
+    },
+  },
+};
+const tailFormItemLayout = {
+  wrapperCol: {
+    xs: {
+      span: 12,
+      offset: 0,
+    },
+    sm: {
+      span: 8,
+      offset: 4,
+    },
+  },
+};
 
 const Login_form = () => {
   const history = useHistory();
@@ -55,22 +88,65 @@ const Login_form = () => {
       })
       .catch((err) => setAuthentication(false));
   };
+  //antd
+  const [form] = Form.useForm();
+
   return (
     <div>
-      <form onSubmit={handleSubmit(tryLogin)}>
-        <label>Email</label>
+      <Form
+        {...formItemLayout}
+        form={form}
+        name="register"
+        onFinish={tryLogin}
+        scrollToFirstError
+      >
+        <Form.Item
+          name="email"
+          label="E-Mail"
+          rules={[
+            {
+              type: "email",
+              message: "Insira um e-mail válido!",
+            },
+            {
+              required: true,
+              message: "Por favor insira seu e-mail.",
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        {/* <label>Email</label>
         <input name="email" ref={register}></input>
-        {errors.email?.message}
-        <label>Senha</label>
+        {errors.email?.message} */}
+        <Form.Item
+          name="password"
+          label="Senha"
+          rules={[
+            {
+              required: true,
+              message: "Por favor insira sua senha.",
+            },
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+        {/* <label>Senha</label>
         <input name="password" ref={register}></input>
-        {errors.password?.message}
+        {errors.password?.message} */}
+        <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit">
+            Register
+          </Button>
+        </Form.Item>
         {isAuthenticated === false ? (
           <span>Login ou senha inválidos.</span>
         ) : (
           <span> </span>
         )}
-        <button type="submit">Entrar</button>
-      </form>
+        {/* <button type="submit">Entrar</button> */}
+      </Form>
     </div>
   );
 };
