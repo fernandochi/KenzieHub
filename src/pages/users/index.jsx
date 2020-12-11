@@ -8,27 +8,28 @@ import CardUsers from "../../components/cardUsers";
 const User = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const total = useSelector((state) => state.userList) || 100;
+
+  let userList = useSelector((state) => state.userList);
   const params = useParams();
 
   useEffect(() => {
     dispatch(getUsersThunk(params.perPage, params.page));
   }, [params]);
+  console.log("userListvindo do state global:", userList);
 
   const handlUserPagination = (page, perPage) => {
     dispatch(getUsersThunk(perPage, page));
     history.push(`/users/${perPage}/${page}`);
   };
 
-  console.log(total);
   return (
     <>
-      {total.map((item, idx) => (
-        <CardUsers userList={item} key={idx} out />
+      {userList.map((item, idx) => (
+        <CardUsers userList={item} key={idx} />
       ))}
       <Pagination
         current={params.page}
-        total={total.length}
+        total={userList.length}
         showSizeChanger
         onShowSizeChange={() => console.log("oi")}
         onChange={handlUserPagination}

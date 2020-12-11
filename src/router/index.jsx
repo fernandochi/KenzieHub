@@ -15,6 +15,8 @@ import Portfolio from "../pages/portfolio";
 import { useDispatch, useSelector } from "react-redux";
 import { isTokenThunk } from "../store/modules/token/thunks";
 
+const URL_AUTHORIZED = ["/profile", "/portfolio", "/technologies"];
+
 const MainRoutes = () => {
   const dispatch = useDispatch();
   const isAuthorized = useSelector((state) => state.booleanToken);
@@ -30,16 +32,53 @@ const MainRoutes = () => {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((data) => {
-          console.log(data);
           dispatch(isTokenThunk(true));
         })
         .catch(() => {
+          localStorage.clear();
           dispatch(isTokenThunk(false));
         });
     } else {
       dispatch(isTokenThunk(false));
+      if (URL_AUTHORIZED.includes(location.pathname)) {
+        history.push("/");
+      }
+      if (location.pathname.includes("/users/")) {
+        history.push("/");
+      }
     }
   }, [location.pathname]);
+
+  if (isAuthorized) {
+    return (
+      <Switch>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/user-registration">
+          <UserRegistration />
+        </Route>
+        <Route exact path="/users/:perPage/:page">
+          <Users />
+        </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
+        <Route path="/portfolio">
+          <Portfolio />
+        </Route>
+        <Route path="/technologies">
+          <Technologies />
+        </Route>
+        <Route>
+          <div>Não existe esta página</div>
+        </Route>
+      </Switch>
+    );
+  }
 
   return (
     <Switch>
@@ -55,47 +94,9 @@ const MainRoutes = () => {
       <Route exact path="/users-list">
         <UsersList />
       </Route>
-      <Route
-        exact
-        path="/users/:perPage/:page"
-        render={(props) =>
-          isAuthorized ? (
-            <Users {...props} />
-          ) : (
-            history.push("/user-registration")
-          )
-        }
-      />
-      <Route
-        path="/profile"
-        render={(props) =>
-          isAuthorized ? (
-            <Profile {...props} />
-          ) : (
-            history.push("/user-registration")
-          )
-        }
-      />
-      <Route
-        path="/portfolio"
-        render={(props) =>
-          isAuthorized ? (
-            <Portfolio {...props} />
-          ) : (
-            history.push("user-registration")
-          )
-        }
-      />
-      <Route
-        path="/technologies"
-        render={(props) =>
-          isAuthorized ? (
-            <Technologies {...props} />
-          ) : (
-            history.push("user-registrarion")
-          )
-        }
-      />
+      <Route>
+        <div>Não existe esta página</div>
+      </Route>
     </Switch>
   );
 };

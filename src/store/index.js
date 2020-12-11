@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
-import loginReducer from "./modules/login/reducers";
+import loginReducer from "./modules/userLogged/reducers";
 import tokenReducer from "./modules/token/reducer";
 import usersReducer from "./modules/users/reducer";
 
