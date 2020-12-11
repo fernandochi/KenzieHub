@@ -57,7 +57,7 @@ const MainRoutes = () => {
       </Route>
       <Route
         exact
-        path="/users"
+        path="/users/:perPage/:page"
         render={(props) =>
           isAuthorized ? (
             <Users {...props} />
