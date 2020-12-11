@@ -26,7 +26,6 @@ const MainRoutes = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log(location.pathname);
     if (token) {
       axios
         .get("https://kenziehub.me/profile", {
@@ -74,6 +73,9 @@ const MainRoutes = () => {
         <Route path="/technologies">
           <Technologies />
         </Route>
+        <Route>
+          <div>Não existe esta página</div>
+        </Route>
       </Switch>
     );
   }
@@ -91,6 +93,9 @@ const MainRoutes = () => {
       </Route>
       <Route exact path="/users-list">
         <UsersList />
+      </Route>
+      <Route>
+        <div>Não existe esta página</div>
       </Route>
     </Switch>
   );

@@ -65,12 +65,12 @@ const UserRegistration = () => {
           course_module: "Primeiro módulo (Introdução ao Frontend)",
         });
         return;
-      case "seconde":
+      case "second":
         formRef.current.setFieldsValue({
           course_module: "Segundo módulo (Frontend Avançado)",
         });
         return;
-      case "threed":
+      case "three":
         formRef.current.setFieldsValue({
           course_module: "Terceiro módulo (Introdução ao Backend)",
         });
@@ -196,10 +196,8 @@ const UserRegistration = () => {
           <Option value="first">
             Primeiro módulo (Introdução ao Frontend)
           </Option>
-          <Option value="seconde">Segundo módulo (Frontend Avançado)</Option>
-          <Option value="threed">
-            Terceiro módulo (Introdução ao Backend)
-          </Option>
+          <Option value="second">Segundo módulo (Frontend Avançado)</Option>
+          <Option value="three">Terceiro módulo (Introdução ao Backend)</Option>
           <Option value="four">Quarto módulo (Backend Avançado)</Option>
         </Select>
       </Form.Item>

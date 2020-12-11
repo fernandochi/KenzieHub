@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { isTokenThunk } from "../../store/modules/token/thunks";
-import tryLoginThunk from "../../store/modules/login/thunks";
+import tryLoginThunk from "../../store/modules/userLogged/thunks";
 
 const formItemLayout = {
   labelCol: {
@@ -52,8 +52,6 @@ const Login = () => {
     if (!token) {
       return;
     }
-    const user = JSON.parse(window.localStorage.getItem("user"));
-    dispatch(tryLoginThunk(user));
     history.push("/profile");
   }, [history, dispatch, token]);
 
@@ -62,7 +60,6 @@ const Login = () => {
       .post("https://kenziehub.me/sessions", { ...data })
       .then((res) => {
         window.localStorage.setItem("token", res.data.token);
-        window.localStorage.setItem("user", JSON.stringify(res.data.user));
         dispatch(tryLoginThunk(res.data.user));
         dispatch(isTokenThunk(true));
         history.push("/profile");
