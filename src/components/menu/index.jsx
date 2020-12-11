@@ -10,7 +10,7 @@ const Menu = () => {
   const handleLogin = () => {
     if (token) {
       localStorage.clear();
-      history.push("/login");
+      return history.push("/");
     }
     history.push("/login");
   };

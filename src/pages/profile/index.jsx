@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
+
 import tryLoginThunk from "../../store/modules/login/thunks";
+
 import axios from "axios";
 
 import { Form, Input, Button } from "antd";
@@ -39,31 +40,25 @@ const tailFormItemLayout = {
 };
 
 const Profile = () => {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const token = window.localStorage.getItem("token");
-  const [isAuthenticated, setAuthentication] = useState(undefined);
+  const [errorRegister, setErrorRegister] = useState(undefined);
   const [isImgAvailable, setImg] = useState(undefined);
 
+  const dispatch = useDispatch();
+  const { register } = useForm({});
+  const [form] = Form.useForm();
+  const token = window.localStorage.getItem("token");
+
   useEffect(() => {
-    if (!token) {
-      history.push("/");
-      return;
-    }
     const user = JSON.parse(window.localStorage.getItem("user"));
     dispatch(tryLoginThunk(user));
   }, []);
 
-  const { register } = useForm({});
-
-  //Processa o avatar para a URL
   const handleAvatar = (ev) => {
     ev.preventDefault();
 
     const data = new FormData();
 
     if (ev.target.files[0].name.includes(" ")) {
-      console.log(ev.target.files[0].name);
       setImg(false);
       return;
     }
@@ -71,7 +66,7 @@ const Profile = () => {
     data.append("avatar", ev.target.files[0]);
 
     axios
-      .patch("https://kenziehub.me/users/avatar", data, {
+      .patch("https://kenziehub.me/users/avatar1", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -80,17 +75,11 @@ const Profile = () => {
         window.localStorage.setItem("user", JSON.stringify(res.data));
         dispatch(tryLoginThunk(res.data));
         setImg(true);
-        setImg(true);
       })
       .catch((err) => setImg(false));
   };
 
-  //antd
-  const [form] = Form.useForm();
-
-  //Processa qualquer dado inserido para a API
   const handleForm = (data) => {
-    const token = window.localStorage.getItem("token");
     axios
       .put(
         "https://kenziehub.me/profile",
@@ -102,23 +91,22 @@ const Profile = () => {
         }
       )
       .then((res) => {
-        console.log(res);
         window.localStorage.setItem("user", JSON.stringify(res.data));
         dispatch(tryLoginThunk(res.data));
-        setAuthentication(true);
+        setErrorRegister(true);
       })
       .catch((err) => {
-        console.log(err);
-        setAuthentication(false);
+        setErrorRegister(false);
       });
   };
   return (
     <>
       <div>
-        {isAuthenticated === true && <span>Dados Atualizados!</span>}
-        {isAuthenticated === false && <span>Erro</span>}
+        {errorRegister && <span>Dados Atualizados!</span>}
+        {errorRegister === false && <span>Erro</span>}
       </div>
       <Form
+        {...formItemLayout}
         onFinish={handleForm}
         form={form}
         name="register"
