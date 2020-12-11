@@ -30,7 +30,6 @@ const MainRoutes = () => {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((data) => {
-          console.log(data);
           dispatch(isTokenThunk(true));
         })
         .catch(() => {
