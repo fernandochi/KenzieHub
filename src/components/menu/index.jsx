@@ -1,17 +1,10 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { MenuUl, MenuLi } from "./style";
+import { useDispatch, useSelector } from "react-redux";
 
 const Menu = () => {
-  const [token, setToken] = useState(undefined);
-  const location = useLocation();
-
-  useEffect(() => {
-    const getToken = localStorage.getItem("token");
-    setToken(getToken);
-    if (getToken) {
-    }
-  }, [location.pathname]);
+  const token = useSelector((state) => state.booleanToken);
   const history = useHistory();
 
   const handleLogin = () => {
@@ -24,7 +17,7 @@ const Menu = () => {
 
   const handlUser = () => {
     if (token) {
-      return history.push("/users");
+      return history.push("/users/10/1");
     }
     history.push("/users-list");
   };

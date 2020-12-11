@@ -10,24 +10,28 @@ import tryLoginThunk from "../../store/modules/login/thunks";
 //verificar state global \/
 import { useSelector } from "react-redux";
 
+import { isTokenThunk } from "../../store/modules/token/thunks";
+
 const Login_form = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
   //verificar state global \/
   const usertest = useSelector((state) => state.user);
+  const token = useSelector((state) => state.booleanToken);
 
   useEffect(() => {
-    const token = window.localStorage.getItem("token");
+    // const token = window.localStorage.getItem("token");
     if (!token) {
       return;
     }
+    if (token) {
+      const user = JSON.parse(window.localStorage.getItem("user"));
+      dispatch(tryLoginThunk(user));
+      history.push("/profile");
+    }
     //verificar state global \/
     console.log(usertest);
-
-    const user = JSON.parse(window.localStorage.getItem("user"));
-    dispatch(tryLoginThunk(user));
-    history.push("/profile");
   }, []);
 
   const schema = yup.object().shape({
@@ -46,6 +50,7 @@ const Login_form = () => {
         window.localStorage.setItem("token", res.data.token);
         window.localStorage.setItem("user", JSON.stringify(res.data.user));
         dispatch(tryLoginThunk(res.data.user));
+        dispatch(isTokenThunk(true));
         history.push("/profile");
       })
       .catch((err) => setAuthentication(false));
