@@ -1,7 +1,6 @@
-import { useHistory, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { MenuUl, MenuLi } from "./style";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Menu = () => {
   const token = useSelector((state) => state.booleanToken);
@@ -10,7 +9,7 @@ const Menu = () => {
   const handleLogin = () => {
     if (token) {
       localStorage.clear();
-      history.push("/login");
+      history.push("/");
     }
     history.push("/login");
   };
@@ -31,7 +30,7 @@ const Menu = () => {
       <MenuUl>
         <MenuLi onClick={handleLogin}>{token ? "Logout" : "Login"}</MenuLi>
         <MenuLi onClick={(event) => handlePath(event, "user-registration")}>
-          Cadastro
+          {token ? null : "Cadastro"}
         </MenuLi>
         <MenuLi onClick={handlUser}>Usuários</MenuLi>
         {token && (

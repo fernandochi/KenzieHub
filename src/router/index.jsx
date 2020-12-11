@@ -46,10 +46,10 @@ const MainRoutes = () => {
       <Route exact path="/">
         <HomePage />
       </Route>
-      <Route path="/login">
+      <Route exact path="/login">
         <Login />
       </Route>
-      <Route path="/user-registration">
+      <Route exact path="/user-registration">
         <UserRegistration />
       </Route>
       <Route exact path="/users-list">
@@ -62,37 +62,37 @@ const MainRoutes = () => {
           isAuthorized ? (
             <Users {...props} />
           ) : (
-            history.push("/user-registration")
+            history.push("/")
           )
         }
       />
       <Route
-        path="/profile"
+        exact path="/profile"
         render={(props) =>
           isAuthorized ? (
             <Profile {...props} />
           ) : (
-            history.push("/user-registration")
+            history.push("/")
           )
         }
       />
       <Route
-        path="/portfolio"
+        exact path="/portfolio"
         render={(props) =>
           isAuthorized ? (
             <Portfolio {...props} />
           ) : (
-            history.push("user-registration")
+            history.push("/")
           )
         }
       />
       <Route
-        path="/technologies"
+        exact path="/technologies"
         render={(props) =>
           isAuthorized ? (
             <Technologies {...props} />
           ) : (
-            history.push("user-registrarion")
+            history.push("/")
           )
         }
       />
