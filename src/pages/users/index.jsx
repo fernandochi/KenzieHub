@@ -1,10 +1,12 @@
+import { BodyDiv, NavigationDiv, AppButton, PageDiv } from "./style";
 import { useParams } from "react-router-dom";
 import { getUsersThunk } from "../../store/modules/users/thunks";
-import { Pagination, Button, Select } from "antd";
+import { Pagination, Button, Select, Row, Col } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardUser from "../../components/cardUser";
+import "./style.css";
 
 const { Option } = Select;
 
@@ -51,48 +53,75 @@ const User = () => {
   };
 
   return (
-    <>
-      <div>
-        <Button onClick={previousPage} disabled={page === 1 ? true : false}>
+    <BodyDiv className="background">
+      <NavigationDiv>
+        <AppButton onClick={previousPage} disabled={page === 1 ? true : false}>
           {" "}
           {`<`}{" "}
-        </Button>
-        <Button onClick={previousStepPage} disabled={page <= 3 ? true : false}>
+        </AppButton>
+        <AppButton
+          onClick={previousStepPage}
+          disabled={page <= 3 ? true : false}
+        >
           {" "}
           {`<<`}{" "}
-        </Button>
-        {page}
-        <Button
+        </AppButton>
+        <PageDiv>{page}</PageDiv>
+        <AppButton
           onClick={nextStepPage}
           disabled={userList.length !== perPage ? true : false}
         >
           {" "}
           {`>>`}{" "}
-        </Button>
-        <Button
+        </AppButton>
+        <AppButton
           onClick={nextPage}
           disabled={userList.length !== perPage ? true : false}
         >
           {" "}
           {`>`}{" "}
-        </Button>
-        <Select
-          labelInValue
-          defaultValue={{ value: perPage }}
-          style={{ width: 80 }}
-          onChange={handleChange}
-        >
-          <Option value="10">10</Option>
-          <Option value="20">20</Option>
-          <Option value="30">30</Option>
-        </Select>
-      </div>
+        </AppButton>
+        <div>
+          <Select
+            size="large"
+            labelInValue
+            defaultValue={{ value: perPage }}
+            style={{
+              width: 80,
+              marginLeft: "9px",
+            }}
+            onChange={handleChange}
+          >
+            <Option value="10">10</Option>
+            <Option value="20">20</Option>
+            <Option value="30">30</Option>
+          </Select>
+        </div>
+      </NavigationDiv>
+
       {!!userList.length ? (
-        userList.map((item, idx) => <CardUser userList={item} key={idx} out />)
+        <Row
+          gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+          justify="center"
+          style={{ maxWidth: "100vw" }}
+        >
+          {userList.map((item, idx) => (
+            <Col
+              span={12}
+              style={{
+                paddingBottom: "16px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <CardUser userList={item} key={idx} out />
+            </Col>
+          ))}
+        </Row>
       ) : (
         <div>Sem dados</div>
       )}
-    </>
+    </BodyDiv>
   );
 };
 

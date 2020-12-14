@@ -1,0 +1,8 @@
+.background {
+  background-color: #1e3a63;
+  background-image: url("./kenzie_logo.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
