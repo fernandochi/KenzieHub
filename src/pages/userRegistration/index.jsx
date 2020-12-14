@@ -39,13 +39,11 @@ const tailFormItemLayout = {
 };
 
 const UserRegistration = () => {
-  const formRef = React.createRef();
-
-  const [form] = Form.useForm();
-
-  const history = useHistory();
-
   const [createdAccount, setCreatedAccount] = useState(undefined);
+
+  const formRef = React.createRef();
+  const [form] = Form.useForm();
+  const history = useHistory();
 
   const onFinish = (values) => {
     axios

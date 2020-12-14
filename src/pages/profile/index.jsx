@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 
 import tryLoginThunk from "../../store/modules/userLogged/thunks";
-import CardUsers from "../../components/cardUsers";
+import CardUser from "../../components/cardUser";
 
 import axios from "axios";
 
@@ -53,7 +53,7 @@ const Profile = () => {
   const formRef = React.createRef();
   const [form] = Form.useForm();
 
-  const token = window.localStorage.getItem("token");
+  const token = useSelector((state) => state.token);
   const user = useSelector((state) => state.user);
 
   const handleAvatar = (ev) => {
@@ -76,6 +76,7 @@ const Profile = () => {
       })
       .then((res) => {
         dispatch(tryLoginThunk(res.data));
+        localStorage.setItem("user", JSON.stringify(res.data));
         setImg(true);
       })
       .catch((err) => setImg(false));
@@ -93,6 +94,7 @@ const Profile = () => {
         }
       )
       .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.data));
         dispatch(tryLoginThunk(res.data));
         setErrorRegister(true);
       })
@@ -135,7 +137,8 @@ const Profile = () => {
         {errorRegister === false && <span>Erro</span>}
       </div>
       <div>
-        <CardUsers userList={user} out />
+        <CardUser userList={user} out />
+
         <Form
           ref={formRef}
           {...formItemLayout}

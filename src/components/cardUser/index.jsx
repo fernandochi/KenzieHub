@@ -14,12 +14,12 @@ const tabList = [
   },
 ];
 
-const CardUsers = ({ userList, out = false }) => {
+const CardUser = ({ userList, out = false }) => {
   const [key, setKey] = useState("Works");
 
   const contentList = {
-    Works: <p>{userList.works}</p>,
-    Techs: <p>{userList.tech}</p>,
+    Works: <p>{JSON.stringify(userList.works)}</p>,
+    Techs: <p>{JSON.stringify(userList.techs)}</p>,
   };
 
   const onTabChange = (key, type) => {
@@ -57,4 +57,4 @@ const CardUsers = ({ userList, out = false }) => {
   );
 };
 
-export default CardUsers;
+export default CardUser;

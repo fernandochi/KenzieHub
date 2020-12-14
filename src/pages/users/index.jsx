@@ -4,7 +4,7 @@ import { Pagination } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
-import CardUsers from "../../components/cardUsers";
+import CardUser from "../../components/cardUser";
 const User = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -25,7 +25,7 @@ const User = () => {
   return (
     <>
       {userList.map((item, idx) => (
-        <CardUsers userList={item} key={idx} />
+        <CardUser userList={item} key={idx} />
       ))}
       <Pagination
         current={params.page}
