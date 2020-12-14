@@ -99,7 +99,7 @@ const MainRoutes = () => {
       <Route exact path="/user-registration">
         <UserRegistration />
       </Route>
-      <Route exact path="/unauthorized-users">
+      <Route exact path="/unauthorized-users/:perPage/:page">
         <UnauthorizedUsers />
       </Route>
       <Route>
