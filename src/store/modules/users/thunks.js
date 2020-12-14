@@ -9,7 +9,6 @@ export const getUsersThunk = (perPage, page, tech = "") => (
       `https://kenziehub.me/users?perPage=${perPage}&page=${page}&tech=${tech}`
     )
     .then((res) => {
-      console.log(res.headers.nexturl);
       dispatch(nextUrl(res.headers.nexturl));
       dispatch(getUsers(res.data));
     })

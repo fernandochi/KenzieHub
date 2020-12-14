@@ -3,46 +3,92 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
+// Páginas do SPA
 import Profile from "../pages/profile";
-import Login from "../pages/login";
-import Technologies from "../pages/technologies";
-import UserRegistration from "../pages/userRegistration";
-import Users from "../pages/users";
-import UsersList from "../pages/usersList";
-import HomePage from "../pages/homePage";
 import Portfolio from "../pages/portfolio";
+import Technologies from "../pages/technologies";
+import Users from "../pages/users";
 
+import HomePage from "../pages/homePage";
+import UnauthorizedUsers from "../pages/unauthorizedUsers";
+import Login from "../pages/login";
+import UserRegistration from "../pages/userRegistration";
+
+import Error404 from "../pages/error404";
+
+// State global do Token
 import { useDispatch, useSelector } from "react-redux";
-import { isTokenThunk } from "../store/modules/token/thunks";
+import { setTokenThunk } from "../store/modules/token/thunks";
+import tryLoginThunk from "../store/modules/userLogged/thunks";
+
+const URL_AUTHORIZED = ["/profile", "/portfolio", "/technologies"];
 
 const MainRoutes = () => {
   const dispatch = useDispatch();
-  const isAuthorized = useSelector((state) => state.booleanToken);
+  const isAuthorized = useSelector((state) => state.token);
 
   const location = useLocation();
   const history = useHistory();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (isAuthorized) {
+    const tokenLocalStorage = localStorage.getItem("token");
+    const userLogged = localStorage.getItem("user");
+    if (tokenLocalStorage && userLogged) {
       axios
         .get("https://kenziehub.me/profile", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${tokenLocalStorage}` },
         })
         .then((data) => {
-          dispatch(isTokenThunk(true));
-          return;
+          dispatch(setTokenThunk(tokenLocalStorage));
+          dispatch(tryLoginThunk(JSON.parse(userLogged)));
         })
-        .catch(() => {
-          dispatch(isTokenThunk(false));
-          return;
+        .catch((err) => {
+          console.log("Local foi apagado");
+          console.log(err);
+          localStorage.clear();
+          dispatch(setTokenThunk(""));
         });
     } else {
-      console.log("termino");
-      dispatch(isTokenThunk(false));
-      return;
+      dispatch(setTokenThunk(""));
+      if (URL_AUTHORIZED.includes(location.pathname)) {
+        history.push("/");
+      }
+      if (location.pathname.includes("/users")) {
+        history.push("/");
+      }
     }
   }, [location.pathname]);
+
+  if (isAuthorized) {
+    return (
+      <Switch>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/user-registration">
+          <UserRegistration />
+        </Route>
+        <Route exact path="/users/:perPage/:page">
+          <Users />
+        </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
+        <Route path="/portfolio">
+          <Portfolio />
+        </Route>
+        <Route path="/technologies">
+          <Technologies />
+        </Route>
+        <Route>
+          <Error404 />
+        </Route>
+      </Switch>
+    );
+  }
 
   return (
     <Switch>
@@ -55,50 +101,12 @@ const MainRoutes = () => {
       <Route exact path="/user-registration">
         <UserRegistration />
       </Route>
-      <Route exact path="/users-list">
-        <UsersList />
+      <Route exact path="/unauthorized-users/:perPage/:page">
+        <UnauthorizedUsers />
       </Route>
-      <Route
-        exact
-        path="/users/:perPage/:page"
-        render={(props) =>
-          isAuthorized ? (
-            <Users {...props} />
-          ) : (
-            history.push("/user-registration")
-          )
-        }
-      />
-      <Route
-        path="/profile"
-        render={(props) =>
-          isAuthorized ? (
-            <Profile {...props} />
-          ) : (
-            history.push("/user-registration")
-          )
-        }
-      />
-      <Route
-        path="/portfolio"
-        render={(props) =>
-          isAuthorized ? (
-            <Portfolio {...props} />
-          ) : (
-            history.push("user-registration")
-          )
-        }
-      />
-      <Route
-        path="/technologies"
-        render={(props) =>
-          isAuthorized ? (
-            <Technologies {...props} />
-          ) : (
-            history.push("user-registrarion")
-          )
-        }
-      />
+      <Route>
+        <Error404 />
+      </Route>
     </Switch>
   );
 };

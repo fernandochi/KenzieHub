@@ -1,7 +1,7 @@
-const tokenReducer = (state = false, action) => {
+const tokenReducer = (state = "", action) => {
   switch (action.type) {
-    case "@token/SWITCH":
-      return action.booleanToken;
+    case "@token/SET":
+      return action.token;
     default:
       return state;
   }

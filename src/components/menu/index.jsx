@@ -1,55 +1,74 @@
-import { useHistory, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { MenuUl, MenuLi } from "./style";
-import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Menu } from "antd";
+import {
+  LoginOutlined,
+  LogoutOutlined,
+  ContactsOutlined,
+  FileDoneOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
-const Menu = () => {
-  const token = useSelector((state) => state.booleanToken);
+const { SubMenu } = Menu;
+
+const MainMenu = () => {
+  const [current, setCurrent] = useState("/");
+  const token = useSelector((state) => state.token);
+
+  const { pathname } = useLocation();
   const history = useHistory();
 
-  const handleLogin = () => {
-    if (token) {
+  useEffect(() => {
+    if (pathname.includes("/unauthorized-users")) {
+      setCurrent("/unauthorized-users/10/1");
+    } else if (pathname.includes("/users")) {
+      setCurrent("/users/10/1");
+    } else {
+      setCurrent(pathname);
+    }
+  }, [pathname]);
+
+  const handleClick = (evt) => {
+    if (evt.key === "logout") {
       localStorage.clear();
-      history.push("/login");
+      setCurrent("/");
+      return history.push("/");
     }
-    history.push("/login");
+    setCurrent(evt.key);
+    history.push(evt.key);
   };
 
-  const handlUser = () => {
-    if (token) {
-      return history.push("/users/10/1");
-    }
-    history.push("/users-list");
-  };
-
-  const handlePath = (event, path) => {
-    history.push(`/${path}`);
-  };
-
+  if (!!token) {
+    return (
+      <Menu onClick={handleClick} selectedKeys={current} mode="horizontal">
+        <Menu.Item key="logout" icon={<LogoutOutlined />}>
+          Logout
+        </Menu.Item>
+        <Menu.Item key="/users/10/1" icon={<ContactsOutlined />}>
+          Lista de usuários
+        </Menu.Item>
+        <SubMenu key="SubMenu" icon={<UserOutlined />} title="Usuário">
+          <Menu.Item key="/profile">Profile</Menu.Item>
+          <Menu.Item key="/portfolio">Portfólio</Menu.Item>
+          <Menu.Item key="/technologies">Tecnologia</Menu.Item>
+        </SubMenu>
+      </Menu>
+    );
+  }
   return (
-    <div>
-      <MenuUl>
-        <MenuLi onClick={handleLogin}>{token ? "Logout" : "Login"}</MenuLi>
-        <MenuLi onClick={(event) => handlePath(event, "user-registration")}>
-          Cadastro
-        </MenuLi>
-        <MenuLi onClick={handlUser}>Usuários</MenuLi>
-        {token && (
-          <>
-            <MenuLi onClick={(event) => handlePath(event, "profile")}>
-              Edição de Perfil
-            </MenuLi>
-            <MenuLi onClick={(event) => handlePath(event, "portfolio")}>
-              Portfólio
-            </MenuLi>
-            <MenuLi onClick={(event) => handlePath(event, "technologies")}>
-              Tecnologias
-            </MenuLi>
-          </>
-        )}
-      </MenuUl>
-    </div>
+    <Menu onClick={handleClick} selectedKeys={current} mode="horizontal">
+      <Menu.Item key="/login" icon={<LoginOutlined />}>
+        Login
+      </Menu.Item>
+      <Menu.Item key="/user-registration" icon={<FileDoneOutlined />}>
+        Cadastro
+      </Menu.Item>
+      <Menu.Item key="/unauthorized-users/10/1" icon={<ContactsOutlined />}>
+        Usuários
+      </Menu.Item>
+    </Menu>
   );
 };
 
-export default Menu;
+export default MainMenu;

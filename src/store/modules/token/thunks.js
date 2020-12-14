@@ -1,5 +1,5 @@
-import { isToken } from "./actions";
+import { setToken } from "./actions";
 
-export const isTokenThunk = (booleanToken) => (dispatch, _getState) => {
-  dispatch(isToken(booleanToken));
+export const setTokenThunk = (token) => (dispatch, _getState) => {
+  dispatch(setToken(token));
 };
