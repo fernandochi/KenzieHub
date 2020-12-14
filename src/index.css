@@ -21,3 +21,13 @@ code {
   justify-content: center;
   align-items: center;
 }
+
+.ant-result-title {
+  color: whitesmoke;
+  font-size: 30px;
+}
+
+.ant-result-subtitle {
+  color: whitesmoke;
+  font-size: 21px;
+}

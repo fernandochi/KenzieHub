@@ -6,12 +6,6 @@ export const BodyDiv = styled.div`
   min-height: 100vh;
   height: 100%;
 `;
-
-export const GridDiv = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-`;
-
 export const NavigationDiv = styled.div`
   margin-bottom: 20px;
   padding-top: 20px;

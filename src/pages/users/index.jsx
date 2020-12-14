@@ -1,11 +1,13 @@
 import { BodyDiv, NavigationDiv, AppButton, PageDiv } from "./style";
 import { useParams } from "react-router-dom";
 import { getUsersThunk } from "../../store/modules/users/thunks";
-import { Pagination, Button, Select, Row, Col } from "antd";
+import { Select, Row, Col } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardUser from "../../components/cardUser";
+import UseAnimations from "react-useanimations";
+import loading from "react-useanimations/lib/loading";
 import "./style.css";
 
 const { Option } = Select;
@@ -119,7 +121,9 @@ const User = () => {
           ))}
         </Row>
       ) : (
-        <div>Sem dados</div>
+        <div>
+          <UseAnimations animation={loading} />
+        </div>
       )}
     </BodyDiv>
   );
