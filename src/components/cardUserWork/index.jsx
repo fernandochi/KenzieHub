@@ -1,13 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button } from "antd";
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import tryLoginThunk from "../../store/modules/userLogged/thunks";
-
-const { Option } = Select;
 
 const formItemLayout = {
   labelCol: {
@@ -40,7 +38,7 @@ const tailFormItemLayout = {
   },
 };
 
-const CardUserTech = ({ tech }) => {
+const CardUserWork = ({ work }) => {
   const [clickUpdate, setClickUpdate] = useState(false);
   const token = useSelector((state) => state.token);
 
@@ -50,7 +48,7 @@ const CardUserTech = ({ tech }) => {
 
   const onDelete = (event, id) => {
     axios
-      .delete(`https://kenziehub.me/users/techs/${id}`, {
+      .delete(`https://kenziehub.me/users/works/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -71,33 +69,17 @@ const CardUserTech = ({ tech }) => {
       .catch((err) => console.log(err));
   };
 
-  const onUpdateChange = (value) => {
-    switch (value) {
-      case "novice":
-        formRef.current.setFieldsValue({
-          status: "Iniciante",
-        });
-        return;
-      case "intermediate":
-        formRef.current.setFieldsValue({
-          status: "Intermediário",
-        });
-        return;
-      case "advanced":
-        formRef.current.setFieldsValue({
-          status: "Avançado",
-        });
-        return;
-      default:
-        return;
-    }
-  };
-
   const onFinish = (values, info) => {
+    const data = {};
+    for (let key in values) {
+      if (values[key]) {
+        data[key] = values[key];
+      }
+    }
     axios
       .put(
-        `https://kenziehub.me/users/techs/${info.id}`,
-        { status: values.status },
+        `https://kenziehub.me/users/works/${info.id}`,
+        { ...data },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -124,11 +106,14 @@ const CardUserTech = ({ tech }) => {
 
   return (
     <div>
-      <div key={tech.id}>
-        <span>{tech.title}</span>
+      <div key={work.id}>
+        <span>{work.title}</span>
       </div>
       <div>
-        <span>{tech.status}</span>
+        <span>{work.description}</span>
+      </div>
+      <div>
+        <span>{work.deploy_url}</span>
       </div>
       <div>
         <button onClick={(evt) => setClickUpdate(!clickUpdate)}>Update</button>
@@ -138,58 +123,67 @@ const CardUserTech = ({ tech }) => {
             {...formItemLayout}
             form={form}
             name="register"
-            onFinish={(evt) => onFinish(evt, { id: tech.id })}
+            onFinish={(evt) => onFinish(evt, { id: work.id })}
             scrollToFirstError
           >
             <Form.Item
               name="title"
-              label="Tecnologia"
-              initialValue={tech.title}
+              label="Título"
               rules={[
                 {
-                  required: true,
-                  message: "Por favor, insira uma tecnologia.",
+                  //   required: true,
+                  message: "Por favor, insira um título para o trabalho.",
                   whitespace: true,
                 },
               ]}
             >
-              <Input value={tech.title} disabled />
+              <Input />
             </Form.Item>
 
             <Form.Item
-              name="status"
-              label="Nível"
+              name="description"
+              label="Descrição"
               rules={[
                 {
-                  required: true,
-                  message:
-                    "Por favor, selecione o nível que você possui nessa tecnologia.",
+                  //   required: true,
+                  message: "Por favor, insira uma descrição para o trabalho.",
+                  whitespace: true,
                 },
               ]}
             >
-              <Select
-                placeholder="Selecione uma opção"
-                onChange={onUpdateChange}
-                allowClear
-              >
-                <Option value="novice">Iniciante</Option>
-                <Option value="intermediate">Intermediário</Option>
-                <Option value="advanced">Avançado</Option>
-              </Select>
+              <Input.TextArea />
+            </Form.Item>
+
+            <Form.Item
+              name="deploy_url"
+              label="Deploy URL"
+              rules={[
+                {
+                  //   required: true,
+                  message: "Por favor, insira a URL do trabalho.",
+                  whitespace: true,
+                },
+                {
+                  type: "url",
+                  message: "Insira uma forma de URL válida.",
+                },
+              ]}
+            >
+              <Input placeholder="https://kenziehub.me" />
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Add Tech
+                Add Work
               </Button>
             </Form.Item>
           </Form>
         )}
       </div>
-      <button onClick={(evt) => onDelete(evt, tech.id)}>Deletar</button>
+      <button onClick={(evt) => onDelete(evt, work.id)}>Deletar</button>
       <br />
     </div>
   );
 };
 
-export default CardUserTech;
+export default CardUserWork;
