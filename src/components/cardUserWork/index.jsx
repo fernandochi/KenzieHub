@@ -5,7 +5,9 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import "./work.css";
+import "../../pages/styles/antd.css";
+import "../../pages/styles/form.css";
+import "../../pages/styles/wholePage.css";
 
 import tryLoginThunk from "../../store/modules/userLogged/thunks";
 
