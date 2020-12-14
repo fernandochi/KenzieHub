@@ -1,0 +1,13 @@
+.background {
+  background-color: #1d3768;
+  background-image: url("./ka-logo.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+.center {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}

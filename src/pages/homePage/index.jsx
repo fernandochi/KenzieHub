@@ -9,7 +9,7 @@ const HomePage = () => {
       <div>
         <h1>KenzieHub</h1>
         <img
-          src="./images/kenzie_logo.png"
+          src="./images/ka-logo.jpg"
           alt="Kenzie Academy logo"
           width="250px"
         />

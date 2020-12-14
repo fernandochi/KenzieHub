@@ -1,10 +1,13 @@
 import { useParams } from "react-router-dom";
 import { getUsersThunk } from "../../store/modules/users/thunks";
-import { Pagination, Button, Select } from "antd";
+import { Pagination, Button, Select, Row, Col } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardUser from "../../components/cardUser";
+import { AppButton, BodyDiv, NavigationDiv, PageDiv } from "../users/style";
+import UseAnimations from "react-useanimations";
+import loading from "react-useanimations/lib/loading";
 
 const { Option } = Select;
 
@@ -51,48 +54,71 @@ const UnauthorizedUsers = () => {
   };
 
   return (
-    <>
-      <div>
-        <Button onClick={previousPage} disabled={page === 1 ? true : false}>
+    <BodyDiv>
+      <NavigationDiv>
+        <AppButton onClick={previousPage} disabled={page === 1 ? true : false}>
           {" "}
           {`<`}{" "}
-        </Button>
-        <Button onClick={previousStepPage} disabled={page <= 3 ? true : false}>
+        </AppButton>
+        <AppButton
+          onClick={previousStepPage}
+          disabled={page <= 3 ? true : false}
+        >
           {" "}
           {`<<`}{" "}
-        </Button>
-        {page}
-        <Button
+        </AppButton>
+        <PageDiv>{page}</PageDiv>
+        <AppButton
           onClick={nextStepPage}
           disabled={userList.length !== perPage ? true : false}
         >
           {" "}
           {`>>`}{" "}
-        </Button>
-        <Button
+        </AppButton>
+        <AppButton
           onClick={nextPage}
           disabled={userList.length !== perPage ? true : false}
         >
           {" "}
           {`>`}{" "}
-        </Button>
+        </AppButton>
         <Select
+          size="large"
           labelInValue
           defaultValue={{ value: perPage }}
-          style={{ width: 80 }}
+          style={{ width: 80, marginLeft: "9px" }}
           onChange={handleChange}
         >
           <Option value="10">10</Option>
           <Option value="20">20</Option>
           <Option value="30">30</Option>
         </Select>
-      </div>
+      </NavigationDiv>
       {!!userList.length ? (
-        userList.map((item, idx) => <CardUser userList={item} key={idx} />)
+        <Row
+          gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+          justify="center"
+          style={{ maxWidth: "100vw" }}
+        >
+          {userList.map((item, idx) => (
+            <Col
+              span={12}
+              style={{
+                paddingBottom: "16px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <CardUser userList={item} key={idx} />
+            </Col>
+          ))}
+        </Row>
       ) : (
-        <div>Sem dados</div>
+        <div>
+          <UseAnimations animation={loading} />
+        </div>
       )}
-    </>
+    </BodyDiv>
   );
 };
 

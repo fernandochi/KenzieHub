@@ -1,13 +1,18 @@
+import { BodyDiv, NavigationDiv, AppButton, PageDiv } from "./style";
 import { useParams } from "react-router-dom";
 import { getUsersThunk } from "../../store/modules/users/thunks";
-import { Pagination, Button, Select } from "antd";
+import { Select, Row, Col, Input } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardUser from "../../components/cardUser";
 import axios from "axios";
+import UseAnimations from "react-useanimations";
+import loading from "react-useanimations/lib/loading";
+import "./style.css";
 
 const { Option } = Select;
+const { Search } = Input;
 
 const User = () => {
   const params = useParams();
@@ -70,45 +75,78 @@ const User = () => {
   };
 
   return (
-    <>
-      <form>
-        <input onChange={(e) => setSearch(e.target.value)} />
-      </form>
-      <div>
-        <Button onClick={previousPage} disabled={page === 1 ? true : false}>
+    <BodyDiv>
+      <div className="center">
+        <Search
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Filtre por tecnologias!"
+          style={{ width: "40%", minWidth: "306px", height: "50px" }}
+        />
+      </div>
+      <NavigationDiv>
+        <AppButton onClick={previousPage} disabled={page === 1 ? true : false}>
           {" "}
           {`<`}{" "}
-        </Button>
-        <Button onClick={previousStepPage} disabled={page <= 3 ? true : false}>
+        </AppButton>
+        <AppButton
+          onClick={previousStepPage}
+          disabled={page <= 3 ? true : false}
+        >
           {" "}
           {`<<`}{" "}
-        </Button>
-        {page}
-        <Button onClick={nextStepPage} disabled={thereAreUsers}>
+        </AppButton>
+        <PageDiv>{page}</PageDiv>
+        <AppButton onClick={nextStepPage} disabled={thereAreUsers}>
           {" "}
           {`>>`}{" "}
-        </Button>
-        <Button onClick={nextPage} disabled={thereAreUsers}>
+        </AppButton>
+        <AppButton onClick={nextPage} disabled={thereAreUsers}>
           {" "}
           {`>`}{" "}
-        </Button>
-        <Select
-          labelInValue
-          defaultValue={{ value: perPage }}
-          style={{ width: 80 }}
-          onChange={handleChange}
-        >
-          <Option value="10">10</Option>
-          <Option value="20">20</Option>
-          <Option value="30">30</Option>
-        </Select>
-      </div>
+        </AppButton>
+        <div>
+          <Select
+            size="large"
+            labelInValue
+            defaultValue={{ value: perPage }}
+            style={{
+              width: 80,
+              marginLeft: "9px",
+            }}
+            onChange={handleChange}
+          >
+            <Option value="10">10</Option>
+            <Option value="20">20</Option>
+            <Option value="30">30</Option>
+          </Select>
+        </div>
+      </NavigationDiv>
+
       {!!userList.length ? (
-        userList.map((item, idx) => <CardUser userList={item} key={idx} out />)
+        <Row
+          gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+          justify="center"
+          style={{ maxWidth: "100vw" }}
+        >
+          {userList.map((item, idx) => (
+            <Col
+              span={12}
+              style={{
+                paddingBottom: "16px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <CardUser userList={item} key={idx} out />
+            </Col>
+          ))}
+        </Row>
       ) : (
-        <div>Sem dados</div>
+        <div>
+          <UseAnimations animation={loading} />
+        </div>
       )}
-    </>
+    </BodyDiv>
   );
 };
 
