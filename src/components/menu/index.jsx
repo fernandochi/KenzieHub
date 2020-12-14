@@ -3,7 +3,7 @@ import { MenuUl, MenuLi } from "./style";
 import { useSelector } from "react-redux";
 
 const Menu = () => {
-  const token = useSelector((state) => state.booleanToken);
+  const token = useSelector((state) => state.token);
   const history = useHistory();
 
   const handleLogin = () => {
@@ -18,7 +18,7 @@ const Menu = () => {
     if (token) {
       return history.push("/users/10/1");
     }
-    history.push("/users-list");
+    history.push("/unauthorized-users");
   };
 
   const handlePath = (event, path) => {
@@ -29,9 +29,11 @@ const Menu = () => {
     <div>
       <MenuUl>
         <MenuLi onClick={handleLogin}>{token ? "Logout" : "Login"}</MenuLi>
-        <MenuLi onClick={(event) => handlePath(event, "user-registration")}>
-          Cadastro
-        </MenuLi>
+        {!token && (
+          <MenuLi onClick={(event) => handlePath(event, "user-registration")}>
+            Cadastro
+          </MenuLi>
+        )}
         <MenuLi onClick={handlUser}>Usuários</MenuLi>
         {token && (
           <>

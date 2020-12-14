@@ -7,7 +7,7 @@ import usersReducer from "./modules/users/reducer";
 
 const reducers = combineReducers({
   user: loginReducer,
-  booleanToken: tokenReducer,
+  token: tokenReducer,
   userList: usersReducer,
 });
 

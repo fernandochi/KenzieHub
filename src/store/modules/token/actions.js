@@ -1,4 +1,4 @@
-export const isToken = (booleanToken) => ({
-  type: "@token/SWITCH",
-  booleanToken,
+export const setToken = (token) => ({
+  type: "@token/SET",
+  token,
 });
