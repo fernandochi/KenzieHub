@@ -27,7 +27,7 @@ const CardUser = ({ userList, out = false }) => {
   };
 
   return (
-    <Card style={{ width: 550 }}>
+    <Card style={{ width: 550, borderRadius: "15px" }}>
       <Meta
         avatar={<Avatar src={userList.avatar_url} />}
         title={userList.name}

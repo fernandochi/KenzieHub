@@ -7,7 +7,7 @@ export const MainPageLayout = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: #1e3a63;
+  background-color: #1d3768;
 
   div {
     display: flex;
