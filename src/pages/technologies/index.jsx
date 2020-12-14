@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, Card } from "antd";
 import { useState } from "react";
 
 import { useSelector } from "react-redux";
@@ -110,6 +110,7 @@ const Technologies = () => {
         onFinish={onFinish}
         scrollToFirstError
       >
+        <h1>Adicione uma nova Tecnologia</h1>
         <Form.Item
           name="title"
           label="Tecnologia"
@@ -154,6 +155,10 @@ const Technologies = () => {
       {errorTech && (
         <p style={{ color: "red" }}>Já foi adicionado essa tecnologia.</p>
       )}
+
+      <Card>
+        <h2>Tecnologias Cadastradas</h2>
+      </Card>
       {!!userLogged.techs &&
         userLogged.techs.map((tech, index) => (
           <CardUserTech tech={tech} key={index} />
