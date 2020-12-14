@@ -84,134 +84,139 @@ const UserRegistration = () => {
   };
 
   return (
-    <Form
-      ref={formRef}
-      {...formItemLayout}
-      form={form}
-      name="register"
-      onFinish={onFinish}
-      scrollToFirstError
-    >
-      <Form.Item
-        name="name"
-        label="Nome"
-        rules={[
-          {
-            required: true,
-            message: "Por favor, insira seu nome.",
-            whitespace: true,
-          },
-        ]}
+    <>
+      <Form
+        ref={formRef}
+        {...formItemLayout}
+        form={form}
+        name="register"
+        onFinish={onFinish}
+        scrollToFirstError
       >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="email"
-        label="E-mail"
-        rules={[
-          {
-            type: "email",
-            message: "Insira um e-mail valido!",
-          },
-          {
-            required: true,
-            message: "Por favor, insira seu e-mail.",
-          },
-        ]}
-      >
-        <Input autoComplete="username" />
-      </Form.Item>
-
-      <Form.Item
-        name="password"
-        label="Senha"
-        rules={[
-          {
-            required: true,
-            message: "Por favor, insira sua senha!",
-          },
-        ]}
-        hasFeedback
-      >
-        <Input.Password autoComplete="new-password" />
-      </Form.Item>
-
-      <Form.Item
-        name="confirmPassword"
-        label="Confirmar Senha"
-        dependencies={["password"]}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: "Por favor, confirme sua senha!",
-          },
-          ({ getFieldValue }) => ({
-            validator(rule, value) {
-              if (!value || getFieldValue("password") === value) {
-                return Promise.resolve();
-              }
-
-              return Promise.reject("As senhas devem ser iguais.");
+        <h1>Faça seu Cadastro</h1>
+        <Form.Item
+          name="name"
+          label="Nome"
+          rules={[
+            {
+              required: true,
+              message: "Por favor, insira seu nome.",
+              whitespace: true,
             },
-          }),
-        ]}
-      >
-        <Input.Password autoComplete="new-password" />
-      </Form.Item>
-      <Form.Item
-        name="contact"
-        label="LinkedIn"
-        rules={[
-          {
-            required: true,
-            message: "Por favor, insira o link do seu perfil LinkedIn",
-          },
-          {
-            type: "url",
-            message: "Insira uma forma de contato válida.",
-          },
-        ]}
-      >
-        <Input placeholder="https://www.linkedin.com/in/usuario/" />
-      </Form.Item>
-
-      <Form.Item
-        name="course_module"
-        label="Módulo do Curso"
-        rules={[
-          {
-            required: true,
-            message: "Por favor, selecione o módulo que você está cursando",
-          },
-        ]}
-      >
-        <Select
-          placeholder="Selecione uma opção"
-          onChange={onCourseChange}
-          allowClear
+          ]}
         >
-          <Option value="first">
-            Primeiro módulo (Introdução ao Frontend)
-          </Option>
-          <Option value="second">Segundo módulo (Frontend Avançado)</Option>
-          <Option value="three">Terceiro módulo (Introdução ao Backend)</Option>
-          <Option value="four">Quarto módulo (Backend Avançado)</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item name="bio" label="Sobre mim">
-        <Input.TextArea />
-      </Form.Item>
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Register
-        </Button>
-      </Form.Item>
-      <h5>
-        {createdAccount && "Conta criada"}
-        {createdAccount === false && "Não foi possível criar sua conta"}
-      </h5>
-    </Form>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="email"
+          label="E-mail"
+          rules={[
+            {
+              type: "email",
+              message: "Insira um e-mail valido!",
+            },
+            {
+              required: true,
+              message: "Por favor, insira seu e-mail.",
+            },
+          ]}
+        >
+          <Input autoComplete="username" />
+        </Form.Item>
+
+        <Form.Item
+          name="password"
+          label="Senha"
+          rules={[
+            {
+              required: true,
+              message: "Por favor, insira sua senha!",
+            },
+          ]}
+          hasFeedback
+        >
+          <Input.Password autoComplete="new-password" />
+        </Form.Item>
+
+        <Form.Item
+          name="confirmPassword"
+          label="Confirmar Senha"
+          dependencies={["password"]}
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: "Por favor, confirme sua senha!",
+            },
+            ({ getFieldValue }) => ({
+              validator(rule, value) {
+                if (!value || getFieldValue("password") === value) {
+                  return Promise.resolve();
+                }
+
+                return Promise.reject("As senhas devem ser iguais.");
+              },
+            }),
+          ]}
+        >
+          <Input.Password autoComplete="new-password" />
+        </Form.Item>
+        <Form.Item
+          name="contact"
+          label="LinkedIn"
+          rules={[
+            {
+              required: true,
+              message: "Por favor, insira o link do seu perfil LinkedIn",
+            },
+            {
+              type: "url",
+              message: "Insira uma forma de contato válida.",
+            },
+          ]}
+        >
+          <Input placeholder="https://www.linkedin.com/in/usuario/" />
+        </Form.Item>
+
+        <Form.Item
+          name="course_module"
+          label="Módulo do Curso"
+          rules={[
+            {
+              required: true,
+              message: "Por favor, selecione o módulo que você está cursando",
+            },
+          ]}
+        >
+          <Select
+            placeholder="Selecione uma opção"
+            onChange={onCourseChange}
+            allowClear
+          >
+            <Option value="first">
+              Primeiro módulo (Introdução ao Frontend)
+            </Option>
+            <Option value="second">Segundo módulo (Frontend Avançado)</Option>
+            <Option value="three">
+              Terceiro módulo (Introdução ao Backend)
+            </Option>
+            <Option value="four">Quarto módulo (Backend Avançado)</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item name="bio" label="Sobre mim">
+          <Input.TextArea />
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit">
+            Register
+          </Button>
+        </Form.Item>
+        <h5>
+          {createdAccount && "Conta criada"}
+          {createdAccount === false && "Não foi possível criar sua conta"}
+        </h5>
+      </Form>
+    </>
   );
 };
 

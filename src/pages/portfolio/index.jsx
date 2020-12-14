@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Card } from "antd";
 import { useState } from "react";
 
 import { useSelector } from "react-redux";
@@ -86,6 +86,7 @@ const Portfolio = () => {
         onFinish={onFinish}
         scrollToFirstError
       >
+        <h1>Adicione uma nova Profissão</h1>
         <Form.Item
           name="title"
           label="Título"
@@ -138,9 +139,13 @@ const Portfolio = () => {
           </Button>
         </Form.Item>
       </Form>
+      <div></div>
       {errorWork && (
         <p style={{ color: "red" }}>Houve algum erro de requisição.</p>
       )}
+      <Card>
+        <h2>Profissões Cadastradas</h2>
+      </Card>
       {!!userLogged.works &&
         userLogged.works.map((work, index) => (
           <CardUserWork work={work} key={index} />
