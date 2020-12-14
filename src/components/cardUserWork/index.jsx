@@ -1,9 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { Form, Input, Button } from "antd";
-
+import { Form, Input, Button, Card } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import "./work.css";
 
 import tryLoginThunk from "../../store/modules/userLogged/thunks";
 
@@ -105,18 +107,21 @@ const CardUserWork = ({ work }) => {
   };
 
   return (
-    <div>
-      <div key={work.id}>
-        <span>{work.title}</span>
-      </div>
-      <div>
-        <span>{work.description}</span>
-      </div>
-      <div>
-        <span>{work.deploy_url}</span>
-      </div>
-      <div>
-        <button onClick={(evt) => setClickUpdate(!clickUpdate)}>Update</button>
+    <Card title={work.title}>
+      <Card type="inner" key={work.id}>
+        <span>Descrição: {work.description}</span>
+      </Card>
+      <Card type="inner">
+        <span>Site: {work.deploy_url}</span>
+      </Card>
+      <Card>
+        <Button
+          onClick={(evt) => setClickUpdate(!clickUpdate)}
+          type="default"
+          htmlType="submit"
+        >
+          Update
+        </Button>
         {clickUpdate && (
           <Form
             ref={formRef}
@@ -179,10 +184,16 @@ const CardUserWork = ({ work }) => {
             </Form.Item>
           </Form>
         )}
-      </div>
-      <button onClick={(evt) => onDelete(evt, work.id)}>Deletar</button>
+      </Card>
+      <Button
+        onClick={(evt) => onDelete(evt, work.id)}
+        type="default"
+        htmlType="submit"
+      >
+        <DeleteOutlined />
+      </Button>
       <br />
-    </div>
+    </Card>
   );
 };
 

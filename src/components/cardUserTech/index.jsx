@@ -1,9 +1,12 @@
 import React from "react";
 import axios from "axios";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, Card } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import "./tech.css";
 
 import tryLoginThunk from "../../store/modules/userLogged/thunks";
 
@@ -123,15 +126,18 @@ const CardUserTech = ({ tech }) => {
   };
 
   return (
-    <div>
-      <div key={tech.id}>
-        <span>{tech.title}</span>
-      </div>
-      <div>
-        <span>{tech.status}</span>
-      </div>
-      <div>
-        <button onClick={(evt) => setClickUpdate(!clickUpdate)}>Update</button>
+    <Card title={tech.title}>
+      <Card type="inner" key={tech.id}>
+        <span>Nível: {tech.status}</span>
+      </Card>
+      <Card>
+        <Button
+          onClick={(evt) => setClickUpdate(!clickUpdate)}
+          type="default"
+          htmlType="submit"
+        >
+          Update
+        </Button>
         {clickUpdate && (
           <Form
             ref={formRef}
@@ -185,10 +191,16 @@ const CardUserTech = ({ tech }) => {
             </Form.Item>
           </Form>
         )}
-      </div>
-      <button onClick={(evt) => onDelete(evt, tech.id)}>Deletar</button>
+      </Card>
+      <Button
+        onClick={(evt) => onDelete(evt, tech.id)}
+        type="default"
+        htmlType="submit"
+      >
+        <DeleteOutlined />
+      </Button>
       <br />
-    </div>
+    </Card>
   );
 };
 
