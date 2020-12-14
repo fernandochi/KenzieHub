@@ -18,7 +18,7 @@ const Menu = () => {
     if (token) {
       return history.push("/users/10/1");
     }
-    history.push("/unauthorized-users");
+    history.push("/unauthorized-users/10/1");
   };
 
   const handlePath = (event, path) => {
