@@ -8,6 +8,7 @@ import {
   ContactsOutlined,
   FileDoneOutlined,
   UserOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
@@ -41,7 +42,10 @@ const MainMenu = () => {
 
   if (!!token) {
     return (
-      <Menu onClick={handleClick} selectedKeys={current} mode="horizontal">
+      <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+        <Menu.Item key="/" icon={<HomeOutlined />}>
+          Home
+        </Menu.Item>
         <Menu.Item key="logout" icon={<LogoutOutlined />}>
           Logout
         </Menu.Item>
@@ -57,7 +61,10 @@ const MainMenu = () => {
     );
   }
   return (
-    <Menu onClick={handleClick} selectedKeys={current} mode="horizontal">
+    <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+      <Menu.Item key="/" icon={<HomeOutlined />}>
+        Home
+      </Menu.Item>
       <Menu.Item key="/login" icon={<LoginOutlined />}>
         Login
       </Menu.Item>

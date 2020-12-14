@@ -86,7 +86,7 @@ const Portfolio = () => {
         onFinish={onFinish}
         scrollToFirstError
       >
-        <h1>Adicione uma nova Profissão</h1>
+        <h1 style={{ textAlign: "center" }}>Adicione uma nova Profissão</h1>
         <Form.Item
           name="title"
           label="Título"
@@ -144,7 +144,7 @@ const Portfolio = () => {
         <p style={{ color: "red" }}>Houve algum erro de requisição.</p>
       )}
       <Card>
-        <h2>Profissões Cadastradas</h2>
+        <h2 style={{ textAlign: "center" }}>Profissões Cadastradas</h2>
       </Card>
       {!!userLogged.works &&
         userLogged.works.map((work, index) => (

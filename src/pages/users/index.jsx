@@ -143,7 +143,9 @@ const User = () => {
         </Row>
       ) : (
         <div>
-          <UseAnimations animation={loading} />
+          <h2 style={{ color: "whitesmoke", textAlign: "center" }}>
+            Sua busca não retornou resultados
+          </h2>
         </div>
       )}
     </BodyDiv>

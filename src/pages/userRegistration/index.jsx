@@ -93,7 +93,7 @@ const UserRegistration = () => {
         onFinish={onFinish}
         scrollToFirstError
       >
-        <h1>Faça seu Cadastro</h1>
+        <h1 style={{ textAlign: "center" }}>Faça seu Cadastro</h1>
         <Form.Item
           name="name"
           label="Nome"
@@ -208,7 +208,7 @@ const UserRegistration = () => {
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            Register
+            Cadastrar
           </Button>
         </Form.Item>
         <h5>
