@@ -1,4 +1,4 @@
-const UsersList = () => {
+const UnauthorizedUsers = () => {
   return (
     <div>
       <h1>Lista de usuário quando não estiver logado</h1>
@@ -6,4 +6,4 @@ const UsersList = () => {
   );
 };
 
-export default UsersList;
+export default UnauthorizedUsers;

@@ -2,11 +2,11 @@ import { Form, Input, Button } from "antd";
 
 import axios from "axios";
 
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { isTokenThunk } from "../../store/modules/token/thunks";
+import { setTokenThunk } from "../../store/modules/token/thunks";
 import tryLoginThunk from "../../store/modules/userLogged/thunks";
 
 const formItemLayout = {
@@ -42,26 +42,19 @@ const tailFormItemLayout = {
 
 const Login = () => {
   const [isAuthenticated, setAuthentication] = useState(undefined);
-  const token = useSelector((state) => state.booleanToken);
 
   const history = useHistory();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
-
-  useEffect(() => {
-    if (!token) {
-      return;
-    }
-    history.push("/profile");
-  }, [history, dispatch, token]);
 
   const tryLogin = (data) => {
     axios
       .post("https://kenziehub.me/sessions", { ...data })
       .then((res) => {
         window.localStorage.setItem("token", res.data.token);
+        window.localStorage.setItem("user", JSON.stringify(res.data.user));
         dispatch(tryLoginThunk(res.data.user));
-        dispatch(isTokenThunk(true));
+        dispatch(setTokenThunk(res.data.token));
         history.push("/profile");
       })
       .catch((err) => setAuthentication(false));
