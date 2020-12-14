@@ -14,6 +14,8 @@ import UnauthorizedUsers from "../pages/unauthorizedUsers";
 import Login from "../pages/login";
 import UserRegistration from "../pages/userRegistration";
 
+import Error404 from "../pages/error404";
+
 // State global do Token
 import { useDispatch, useSelector } from "react-redux";
 import { setTokenThunk } from "../store/modules/token/thunks";
@@ -82,7 +84,7 @@ const MainRoutes = () => {
           <Technologies />
         </Route>
         <Route>
-          <div>Não existe esta página</div>
+          <Error404 />
         </Route>
       </Switch>
     );
@@ -103,7 +105,7 @@ const MainRoutes = () => {
         <UnauthorizedUsers />
       </Route>
       <Route>
-        <div>Não existe esta página</div>
+        <Error404 />
       </Route>
     </Switch>
   );
