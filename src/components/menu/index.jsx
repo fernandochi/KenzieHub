@@ -28,7 +28,7 @@ const MainMenu = () => {
     } else {
       setCurrent(pathname);
     }
-  }, [pathname]);
+  }, [pathname, token]);
 
   const handleClick = (evt) => {
     if (evt.key === "logout") {

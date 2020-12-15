@@ -71,7 +71,7 @@ const UnauthorizedUsers = () => {
   const handleChange = (values) => {
     setPerPage(Number(values.key));
     dispatch(getUsersThunk(values.key, 1));
-    history.push(`/unauthorized-users/${values.key}/${1}`);
+    history.push(`/unauthorized-users/${values.key}/${page}`);
   };
 
   return (
@@ -129,8 +129,8 @@ const UnauthorizedUsers = () => {
           ))}
         </Row>
       ) : (
-        <div>
-          <UseAnimations animation={loading} />
+        <div className="center" style={{ color: "white" }}>
+          <UseAnimations animation={loading} size={100} />
         </div>
       )}
     </BodyDiv>

@@ -71,7 +71,7 @@ const User = () => {
   const handleChange = (values) => {
     setPerPage(Number(values.key));
     dispatch(getUsersThunk(values.key, 1));
-    history.push(`/users/${values.key}/${1}`);
+    history.push(`/users/${values.key}/${page}`);
   };
 
   return (
