@@ -7,8 +7,6 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardUser from "../../components/cardUser";
 import axios from "axios";
-import UseAnimations from "react-useanimations";
-import loading from "react-useanimations/lib/loading";
 import "./style.css";
 import { motion } from "framer-motion";
 
@@ -81,7 +79,7 @@ const User = () => {
         <Search
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Filtre por tecnologias!"
-          style={{ width: "40%", minWidth: "306px", height: "50px" }}
+          style={{ width: "40%", minWidth: "280px", height: "50px" }}
         />
       </div>
       <NavigationDiv>
@@ -130,21 +128,21 @@ const User = () => {
           style={{ maxWidth: "100vw" }}
         >
           {userList.map((item, idx) => (
-            <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                <Col
-                  key={idx}
-                  span={12}
-                  style={{
-                    paddingBottom: "16px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <CardUser userList={item} key={item.id} out favorited />
-                </Col>
-              </motion.div>
-            </motion.div>
+            <Col
+              xs={24}
+              sm={24}
+              md={24}
+              lg={12}
+              xl={12}
+              key={idx}
+              style={{
+                paddingBottom: "16px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <CardUser userList={item} key={item.id} out favorited />
+            </Col>
           ))}
         </Row>
       ) : (

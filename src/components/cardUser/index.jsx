@@ -94,12 +94,13 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
 
   return (
     <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
-      <Card style={{ width: 550, borderRadius: "15px" }}>
+      <Card
+        style={{ minWidth: "280px", maxWidth: "550px", borderRadius: "15px" }}
+      >
         <Meta
           avatar={<Avatar src={userList.avatar_url} />}
           title={userList.name}
           description={userList.bio}
-          extra="oi"
         />
         <Card
           style={{ marginTop: 10 }}

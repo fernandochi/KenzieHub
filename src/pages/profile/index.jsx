@@ -69,7 +69,7 @@ const Profile = () => {
   const history = useHistory();
 
   const token = useSelector((state) => state.token);
-  const user = useSelector((state) => state.user);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleAvatar = (ev) => {
     ev.preventDefault();

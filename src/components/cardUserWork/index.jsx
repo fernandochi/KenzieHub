@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Form, Input, Button, Card } from "antd";
+import { Form, Input, Button, Card, Modal } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -116,7 +116,7 @@ const CardUserWork = ({ work }) => {
       <Card type="inner">
         <span>Site: {work.deploy_url}</span>
       </Card>
-      <Card>
+      <Card style={{ display: "flex", justifyContent: "end" }}>
         <Button
           onClick={(evt) => setClickUpdate(!clickUpdate)}
           type="default"
@@ -124,7 +124,12 @@ const CardUserWork = ({ work }) => {
         >
           Update
         </Button>
-        {clickUpdate && (
+        <Modal
+          title="Atualizar dados"
+          visible={clickUpdate}
+          onOk={() => setClickUpdate(!clickUpdate)}
+          onCancel={() => setClickUpdate(!clickUpdate)}
+        >
           <Form
             ref={formRef}
             {...formItemLayout}
@@ -144,7 +149,7 @@ const CardUserWork = ({ work }) => {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder={work.title} />
             </Form.Item>
 
             <Form.Item
@@ -158,7 +163,7 @@ const CardUserWork = ({ work }) => {
                 },
               ]}
             >
-              <Input.TextArea />
+              <Input.TextArea placeholder={work.description} />
             </Form.Item>
 
             <Form.Item
@@ -181,11 +186,13 @@ const CardUserWork = ({ work }) => {
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Add Work
+                Atualizar
               </Button>
             </Form.Item>
           </Form>
-        )}
+        </Modal>
+        {/* {clickUpdate && ( */}
+        {/* )} */}
       </Card>
       <Button
         onClick={(evt) => onDelete(evt, work.id)}
