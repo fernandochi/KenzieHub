@@ -8,6 +8,7 @@ import {
   ContactsOutlined,
   FileDoneOutlined,
   UserOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
@@ -24,16 +25,21 @@ const MainMenu = () => {
       setCurrent("/unauthorized-users/10/1");
     } else if (pathname.includes("/users")) {
       setCurrent("/users/10/1");
+    } else if (pathname === "/") {
+      setCurrent("menu");
     } else {
       setCurrent(pathname);
     }
-  }, [pathname]);
+  }, [pathname, token]);
 
   const handleClick = (evt) => {
     if (evt.key === "logout") {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      setCurrent("/");
+      setCurrent("menu");
+      return history.push("/");
+    } else if (evt.key === "menu") {
+      setCurrent("menu");
       return history.push("/");
     }
     setCurrent(evt.key);
@@ -42,9 +48,15 @@ const MainMenu = () => {
 
   if (!!token) {
     return (
-      <Menu onClick={handleClick} selectedKeys={current} mode="horizontal">
+      <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+        <Menu.Item key="/" icon={<HomeOutlined />}>
+          Home
+        </Menu.Item>
         <Menu.Item key="logout" icon={<LogoutOutlined />}>
           Logout
+        </Menu.Item>
+        <Menu.Item key="menu" icon={<HomeOutlined />}>
+          Home
         </Menu.Item>
 
         <SubMenu
@@ -67,10 +79,17 @@ const MainMenu = () => {
     );
   }
   return (
-    <Menu onClick={handleClick} selectedKeys={current} mode="horizontal">
+    <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+      <Menu.Item key="/" icon={<HomeOutlined />}>
+        Home
+      </Menu.Item>
       <Menu.Item key="/login" icon={<LoginOutlined />}>
         Login
       </Menu.Item>
+      <Menu.Item key="menu" icon={<HomeOutlined />}>
+        Home
+      </Menu.Item>
+
       <Menu.Item key="/user-registration" icon={<FileDoneOutlined />}>
         Cadastro
       </Menu.Item>

@@ -1,13 +1,11 @@
 import styled from "styled-components";
 
 export const MainPageLayout = styled.div`
-  width: 100%;
   min-height: 100vh;
   height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   background-color: #1d3768;
+  display: grid;
+  grid-template-rows: 1fr auto;
 
   div {
     display: flex;
@@ -18,26 +16,19 @@ export const MainPageLayout = styled.div`
       color: whitesmoke;
       font-size: 5rem;
     }
-  }
-
-  header {
-    width: 100%;
-    min-height: 10vh;
-    height: 10%;
-    display: flex;
-    position: absolute;
-    top: 0;
-    background-color: #b4d2ba;
+    div {
+      width: 400px;
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
 
   footer {
-    width: 100%;
+    display: flex;
     justify-content: space-around;
     flex-direction: row;
-    display: flex;
     flex-wrap: nowrap;
-    position: absolute;
-    bottom: 8%;
+    bottom: 8px;
     margin: 8px;
   }
 `;

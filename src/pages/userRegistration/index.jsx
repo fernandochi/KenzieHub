@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, message } from "antd";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
@@ -37,7 +37,9 @@ const tailFormItemLayout = {
     },
   },
 };
-
+const success = () => {
+  message.success("Cadastro efetuado com sucesso!");
+};
 const UserRegistration = () => {
   const [createdAccount, setCreatedAccount] = useState(undefined);
 
@@ -49,6 +51,7 @@ const UserRegistration = () => {
     axios
       .post("https://kenziehub.me/users", { ...values })
       .then((res) => {
+        success();
         history.push("/login");
       })
       .catch((res) => {
@@ -93,7 +96,7 @@ const UserRegistration = () => {
         onFinish={onFinish}
         scrollToFirstError
       >
-        <h1>Faça seu Cadastro</h1>
+        <h1 style={{ textAlign: "center" }}>Faça seu Cadastro</h1>
         <Form.Item
           name="name"
           label="Nome"
@@ -131,6 +134,14 @@ const UserRegistration = () => {
             {
               required: true,
               message: "Por favor, insira sua senha!",
+            },
+            {
+              pattern: /^((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1}).*$/,
+              message: "Mínimo 1 caracter especial.",
+            },
+            {
+              pattern: /^((?=.*[A-Z]){1}).*$/,
+              message: "Mínimo 1 caracter maiúscula.",
             },
           ]}
           hasFeedback
@@ -208,7 +219,7 @@ const UserRegistration = () => {
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            Register
+            Cadastrar
           </Button>
         </Form.Item>
         <h5>
