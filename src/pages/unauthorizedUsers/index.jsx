@@ -102,6 +102,7 @@ const UnauthorizedUsers = () => {
         >
           {userList.map((item, idx) => (
             <Col
+              key={idx}
               span={12}
               style={{
                 paddingBottom: "16px",
@@ -109,7 +110,7 @@ const UnauthorizedUsers = () => {
                 justifyContent: "center",
               }}
             >
-              <CardUser userList={item} key={idx} />
+              <CardUser userList={item} key={item.id} />
             </Col>
           ))}
         </Row>
