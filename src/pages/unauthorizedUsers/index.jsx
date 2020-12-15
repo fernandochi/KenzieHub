@@ -1,15 +1,12 @@
 import { useParams } from "react-router-dom";
 import { getUsersThunk } from "../../store/modules/users/thunks";
-import { Select, Row, Col } from "antd";
+import { Empty, Select, Row, Col } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardUser from "../../components/cardUser";
 import { AppButton, BodyDiv, NavigationDiv, PageDiv } from "../users/style";
 import axios from "axios";
-
-import UseAnimations from "react-useanimations";
-import loading from "react-useanimations/lib/loading";
 
 const { Option } = Select;
 
@@ -129,9 +126,7 @@ const UnauthorizedUsers = () => {
           ))}
         </Row>
       ) : (
-        <div className="center" style={{ color: "white" }}>
-          <UseAnimations animation={loading} size={100} />
-        </div>
+        <Empty style={{ marginTop: 100 }} />
       )}
     </BodyDiv>
   );

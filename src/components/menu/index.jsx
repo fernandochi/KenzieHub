@@ -25,6 +25,8 @@ const MainMenu = () => {
       setCurrent("/unauthorized-users/10/1");
     } else if (pathname.includes("/users")) {
       setCurrent("/users/10/1");
+    } else if (pathname === "/") {
+      setCurrent("menu");
     } else {
       setCurrent(pathname);
     }
@@ -34,7 +36,10 @@ const MainMenu = () => {
     if (evt.key === "logout") {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      setCurrent("/");
+      setCurrent("menu");
+      return history.push("/");
+    } else if (evt.key === "menu") {
+      setCurrent("menu");
       return history.push("/");
     }
     setCurrent(evt.key);
@@ -78,6 +83,7 @@ const MainMenu = () => {
       <Menu.Item key="/login" icon={<LoginOutlined />}>
         Login
       </Menu.Item>
+
       <Menu.Item key="/user-registration" icon={<FileDoneOutlined />}>
         Cadastro
       </Menu.Item>

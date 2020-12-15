@@ -7,10 +7,14 @@ import tryLoginThunk from "../../store/modules/userLogged/thunks";
 import CardUser from "../../components/cardUser";
 
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-import { Form, Input, Button, Select } from "antd";
+import "./styles.css";
+
+import { Form, Input, Button, Select, message, Typography } from "antd";
 
 const { Option } = Select;
+const { Title } = Typography;
 
 const formItemLayout = {
   labelCol: {
@@ -43,6 +47,14 @@ const tailFormItemLayout = {
   },
 };
 
+const success = () => {
+  message.success("Dados Atualizados");
+};
+
+const error = (err) => {
+  message.error("Erro: " + err);
+};
+
 const Profile = () => {
   const [errorRegister, setErrorRegister] = useState(undefined);
   const [isImgAvailable, setImg] = useState(undefined);
@@ -52,6 +64,7 @@ const Profile = () => {
 
   const formRef = React.createRef();
   const [form] = Form.useForm();
+  const history = useHistory();
 
   const token = useSelector((state) => state.token);
   const user = JSON.parse(localStorage.getItem("user"));
@@ -60,14 +73,19 @@ const Profile = () => {
     ev.preventDefault();
 
     const data = new FormData();
+    // console.log(ev);
 
-    if (ev.target.files[0].name.includes(" ")) {
-      setImg(false);
-      return;
-    }
+    // if (!ev.target.files) {
+    //   console.log(ev.target.files);
+    //   if (ev.target.files[0].name.includes(" ") || !!!ev.target.files[0].name) {
+    //     console.log(ev.target.files[0]);
+    //     setImg(false);
+    //     return;
+    //   }
+    // }
 
     data.append("avatar", ev.target.files[0]);
-
+    console.log(ev);
     axios
       .patch("https://kenziehub.me/users/avatar", data, {
         headers: {
@@ -77,12 +95,14 @@ const Profile = () => {
       .then((res) => {
         dispatch(tryLoginThunk(res.data));
         localStorage.setItem("user", JSON.stringify(res.data));
-        setImg(true);
+        success();
       })
-      .catch((err) => setImg(false));
+      .catch((err) => error(err.message));
   };
 
   const handleForm = (data) => {
+    const isPassword = data.password;
+    console.log(data);
     axios
       .put(
         "https://kenziehub.me/profile",
@@ -97,6 +117,13 @@ const Profile = () => {
         localStorage.setItem("user", JSON.stringify(res.data));
         dispatch(tryLoginThunk(res.data));
         setErrorRegister(true);
+        success();
+
+        if (!!isPassword) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          history.push("/login");
+        }
       })
       .catch((err) => {
         setErrorRegister(false);
@@ -132,145 +159,163 @@ const Profile = () => {
 
   return (
     <>
-      <div>
+      {/* <div>
         {errorRegister && <span>Dados Atualizados!</span>}
         {errorRegister === false && <span>Erro</span>}
-      </div>
+      </div> */}
+      <div>
+        <CardUser userList={user} out />
 
-      <CardUser userList={user} out />
-
-      <Form
-        ref={formRef}
-        {...formItemLayout}
-        onFinish={handleForm}
-        form={form}
-        name="register"
-        scrollToFirstError
-      >
-        <h2>Atualize seus dados</h2>
-        <Form.Item
-          name="name"
-          label="Nome"
-          rules={[
-            {
-              required: false,
-              whitespace: true,
-            },
-          ]}
+        <Form
+          style={{ textAlign: "left" }}
+          ref={formRef}
+          {...formItemLayout}
+          onFinish={handleForm}
+          form={form}
+          name="register"
+          scrollToFirstError
         >
-          <Input placeholder={user.name} />
-        </Form.Item>
-        <Form.Item
-          name="email"
-          label="E-mail"
-          rules={[
-            {
-              type: "email",
-              message: "Insira um e-mail válido!",
-            },
-            {
-              required: false,
-            },
-          ]}
-        >
-          <Input autoComplete="username" placeholder={user.email} />
-        </Form.Item>
-        <Form.Item
-          name="course_module"
-          label="Módulo do Curso"
-          rules={[
-            {
-              message: "Por favor, selecione o módulo que você está cursando",
-            },
-          ]}
-        >
-          <Select
-            placeholder="Selecione uma opção"
-            onChange={onCourseChange}
-            allowClear
+          <Title
+            style={{ marginLeft: "33%", padding: 15, paddingLeft: 0 }}
+            level={3}
           >
-            <Option value="first">
-              Primeiro módulo (Introdução ao Frontend)
-            </Option>
-            <Option value="second">Segundo módulo (Frontend Avançado)</Option>
-            <Option value="three">
-              Terceiro módulo (Introdução ao Backend)
-            </Option>
-            <Option value="four">Quarto módulo (Backend Avançado)</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item name="bio" label="Sobre mim">
-          <Input.TextArea placeholder={user.bio} />
-        </Form.Item>
-        <Form.Item
-          name="contact"
-          label="LinkedIn"
-          rules={[
-            {
-              required: false,
-            },
-            {
-              type: "url",
-              message: "Insira uma forma de contato válida!",
-            },
-          ]}
+            Mudar dados
+          </Title>
+          <Form.Item
+            name="name"
+            label="Nome"
+            rules={[
+              {
+                required: false,
+                whitespace: true,
+              },
+            ]}
+          >
+            <Input placeholder={user.name} />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            label="E-mail"
+            rules={[
+              {
+                type: "email",
+                message: "Insira um e-mail válido!",
+              },
+              {
+                required: false,
+              },
+            ]}
+          >
+            <Input autoComplete="username" placeholder={user.email} />
+          </Form.Item>
+          <Form.Item
+            name="course_module"
+            label="Módulo do Curso"
+            rules={[
+              {
+                message: "Por favor, selecione o módulo que você está cursando",
+              },
+            ]}
+          >
+            <Select
+              placeholder="Selecione uma opção"
+              onChange={onCourseChange}
+              allowClear
+            >
+              <Option value="first">
+                Primeiro módulo (Introdução ao Frontend)
+              </Option>
+              <Option value="second">Segundo módulo (Frontend Avançado)</Option>
+              <Option value="three">
+                Terceiro módulo (Introdução ao Backend)
+              </Option>
+              <Option value="four">Quarto módulo (Backend Avançado)</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item name="bio" label="Sobre mim">
+            <Input.TextArea placeholder={user.bio} />
+          </Form.Item>
+          <Form.Item
+            name="contact"
+            label="LinkedIn"
+            rules={[
+              {
+                required: false,
+              },
+              {
+                type: "url",
+                message: "Insira uma forma de contato válida!",
+              },
+            ]}
+          >
+            <Input placeholder={user.contact} />
+          </Form.Item>
+          <Form.Item
+            name="old_password"
+            label="Senha Antiga"
+            rules={[
+              {
+                required: false,
+              },
+            ]}
+          >
+            <Input.Password autoComplete="new-password" />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            label="Nova Senha"
+            rules={[
+              {
+                required: false,
+                min: 6,
+                message: "É necessário no mínimo 6 caracteres!",
+              },
+              {
+                pattern: /^((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1}).*$/,
+                message: "Mínimo 1 caracter especial.",
+              },
+              {
+                pattern: /^((?=.*[A-Z]){1}).*$/,
+                message: "Mínimo 1 caracter maiúscula.",
+              },
+            ]}
+          >
+            <Input.Password autoComplete="new-password" />
+          </Form.Item>
+          <Form.Item {...tailFormItemLayout}>
+            <Button type="primary" htmlType="submit">
+              Atualizar Dados
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+      <div>
+        <Form
+          // ref={formRef}
+          {...formItemLayout}
+          // form={form}
+          name="avatarRegister"
         >
-          <Input placeholder={user.contact} />
-        </Form.Item>
-        <Form.Item
-          name="old_password"
-          label="Senha Antiga"
-          rules={[
-            {
-              required: false,
-            },
-          ]}
-        >
-          <Input.Password autoComplete="new-password" />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          label="Nova Senha"
-          rules={[
-            {
-              required: false,
-              min: 6,
-              message: "É necessário no mínimo 6 caracteres!",
-            },
-          ]}
-        >
-          <Input.Password autoComplete="new-password" />
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
-            Atualizar Dados
-          </Button>
-        </Form.Item>
-      </Form>
-
-      <form>
-        <label>Novo Avatar</label>
-        <input
-          type="file"
-          ref={register}
-          name="avatar"
-          id="avatar"
-          onChange={handleAvatar}
-        ></input>
-        {/*usar botao para atualizar o avatar, nao atualizar sozinho?*/}
-        {isImgAvailable === false && (
-          <>
-            <br />
-            <span>O nome da imagem nao deve conter espaços!</span>
-          </>
-        )}
-        {isImgAvailable === true && (
-          <>
-            <br />
-            <span>Dados Atualizados!</span>
-          </>
-        )}
-      </form>
+          <Title
+            style={{ marginLeft: "33%", padding: 5, paddingLeft: 0 }}
+            level={3}
+          >
+            Novo Avatar
+          </Title>
+          <Form.Item label="Novo Avatar">
+            <input
+              className="inputfile"
+              id="avatar"
+              name="avatar"
+              // ref={register}
+              type="file"
+              onChange={handleAvatar}
+            ></input>
+            {/* {isImgAvailable === false && <Space>{error()}</Space>} */}
+            {/* {isImgAvailable === true && <Space>{success()}</Space>} */}
+          </Form.Item>
+        </Form>
+      </div>
     </>
   );
 };

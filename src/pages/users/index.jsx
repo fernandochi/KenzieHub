@@ -1,7 +1,7 @@
 import { BodyDiv, NavigationDiv, AppButton, PageDiv } from "./style";
 import { useParams } from "react-router-dom";
 import { getUsersThunk } from "../../store/modules/users/thunks";
-import { Select, Row, Col, Input } from "antd";
+import { Select, Row, Col, Input, Empty } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -145,11 +145,7 @@ const User = () => {
           ))}
         </Row>
       ) : (
-        <div>
-          <h2 style={{ color: "whitesmoke", textAlign: "center" }}>
-            Sua busca não retornou resultados
-          </h2>
-        </div>
+        <Empty style={{ marginTop: 100 }} />
       )}
     </BodyDiv>
   );
