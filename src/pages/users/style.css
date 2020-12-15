@@ -5,3 +5,9 @@
   background-position: center center;
   background-attachment: fixed;
 }
+
+.center {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
