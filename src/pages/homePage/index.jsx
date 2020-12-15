@@ -1,7 +1,9 @@
+import { useHistory } from "react-router-dom";
 import { MainPageLayout } from "./styles";
 
 import ProjectDetails from "../../components/projectDetails";
 import AboutUs from "../../components/aboutUs";
+import { Button } from "antd";
 
 import { motion } from "framer-motion";
 
@@ -27,6 +29,7 @@ const item = {
 };
 
 const HomePage = () => {
+  const history = useHistory();
   return (
     <MainPageLayout>
       <motion.div

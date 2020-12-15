@@ -1,11 +1,13 @@
 import { useParams } from "react-router-dom";
 import { getUsersThunk } from "../../store/modules/users/thunks";
-import { Pagination, Button, Select, Row, Col } from "antd";
+import { Empty, Select, Row, Col } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardUser from "../../components/cardUser";
 import { AppButton, BodyDiv, NavigationDiv, PageDiv } from "../users/style";
+import axios from "axios";
+
 import UseAnimations from "react-useanimations";
 import loading from "react-useanimations/lib/loading";
 
@@ -18,11 +20,30 @@ const UnauthorizedUsers = () => {
   const history = useHistory();
   const params = useParams();
 
+  const [thereAreUsers, setThereAreUsers] = useState(false);
+
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(Number(params.page));
   const [perPage, setPerPage] = useState(Number(params.perPage));
   let userList = useSelector((state) => state.userList);
+  let nextUrl = useSelector((state) => state.nextUrl);
+
+  const thereAreMoreUsers = () => {
+    axios
+      .get(nextUrl)
+      .then((response) => {
+        if (response.data.length === 0) {
+          return setThereAreUsers(true);
+        }
+        setThereAreUsers(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   useEffect(() => {
+    thereAreMoreUsers();
     setPage(Number(params.page));
     dispatch(getUsersThunk(params.perPage, params.page));
   }, [params]);
@@ -52,7 +73,7 @@ const UnauthorizedUsers = () => {
   const handleChange = (values) => {
     setPerPage(Number(values.key));
     dispatch(getUsersThunk(values.key, 1));
-    history.push(`/unauthorized-users/${values.key}/${1}`);
+    history.push(`/unauthorized-users/${values.key}/${page}`);
   };
 
   return (
@@ -70,17 +91,11 @@ const UnauthorizedUsers = () => {
           {`<<`}{" "}
         </AppButton>
         <PageDiv>{page}</PageDiv>
-        <AppButton
-          onClick={nextStepPage}
-          disabled={userList.length !== perPage ? true : false}
-        >
+        <AppButton onClick={nextStepPage} disabled={thereAreUsers}>
           {" "}
           {`>>`}{" "}
         </AppButton>
-        <AppButton
-          onClick={nextPage}
-          disabled={userList.length !== perPage ? true : false}
-        >
+        <AppButton onClick={nextPage} disabled={thereAreUsers}>
           {" "}
           {`>`}{" "}
         </AppButton>
@@ -119,9 +134,7 @@ const UnauthorizedUsers = () => {
           ))}
         </Row>
       ) : (
-        <div>
-          <UseAnimations animation={loading} />
-        </div>
+        <Empty style={{ marginTop: 100 }} />
       )}
     </BodyDiv>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, message } from "antd";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
@@ -39,7 +39,9 @@ const tailFormItemLayout = {
     },
   },
 };
-
+const success = () => {
+  message.success("Cadastro efetuado com sucesso!");
+};
 const UserRegistration = () => {
   const [createdAccount, setCreatedAccount] = useState(undefined);
 
@@ -51,6 +53,7 @@ const UserRegistration = () => {
     axios
       .post("https://kenziehub.me/users", { ...values })
       .then((res) => {
+        success();
         history.push("/login");
       })
       .catch((res) => {

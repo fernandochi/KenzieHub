@@ -1,7 +1,7 @@
 import { BodyDiv, NavigationDiv, AppButton, PageDiv } from "./style";
 import { useParams } from "react-router-dom";
 import { getUsersThunk } from "../../store/modules/users/thunks";
-import { Select, Row, Col, Input } from "antd";
+import { Select, Row, Col, Input, Empty } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -72,7 +72,7 @@ const User = () => {
   const handleChange = (values) => {
     setPerPage(Number(values.key));
     dispatch(getUsersThunk(values.key, 1));
-    history.push(`/users/${values.key}/${1}`);
+    history.push(`/users/${values.key}/${page}`);
   };
 
   return (
@@ -148,9 +148,7 @@ const User = () => {
           ))}
         </Row>
       ) : (
-        <div>
-          <UseAnimations animation={loading} />
-        </div>
+        <Empty style={{ marginTop: 100 }} />
       )}
     </BodyDiv>
   );
