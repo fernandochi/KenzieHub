@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { getUsersThunk } from "../../store/modules/users/thunks";
-import { Pagination, Button, Select, Row, Col } from "antd";
+import { Empty, Select, Row, Col } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -115,9 +115,7 @@ const UnauthorizedUsers = () => {
           ))}
         </Row>
       ) : (
-        <div>
-          <UseAnimations animation={loading} />
-        </div>
+        <Empty style={{ marginTop: 100 }} />
       )}
     </BodyDiv>
   );

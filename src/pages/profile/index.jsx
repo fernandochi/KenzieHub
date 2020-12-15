@@ -102,6 +102,7 @@ const Profile = () => {
 
   const handleForm = (data) => {
     const isPassword = data.password;
+    console.log(data);
     axios
       .put(
         "https://kenziehub.me/profile",
@@ -116,6 +117,8 @@ const Profile = () => {
         localStorage.setItem("user", JSON.stringify(res.data));
         dispatch(tryLoginThunk(res.data));
         setErrorRegister(true);
+        success();
+
         if (!!isPassword) {
           localStorage.removeItem("token");
           localStorage.removeItem("user");
@@ -156,10 +159,10 @@ const Profile = () => {
 
   return (
     <>
-      <div>
+      {/* <div>
         {errorRegister && <span>Dados Atualizados!</span>}
         {errorRegister === false && <span>Erro</span>}
-      </div>
+      </div> */}
       <div>
         <CardUser userList={user} out />
 
@@ -288,11 +291,10 @@ const Profile = () => {
       </div>
       <div>
         <Form
-          ref={formRef}
+          // ref={formRef}
           {...formItemLayout}
-          form={form}
-          name="register"
-          scrollToFirstError
+          // form={form}
+          name="avatarRegister"
         >
           <Title
             style={{ marginLeft: "33%", padding: 5, paddingLeft: 0 }}
@@ -305,7 +307,7 @@ const Profile = () => {
               className="inputfile"
               id="avatar"
               name="avatar"
-              ref={register}
+              // ref={register}
               type="file"
               onChange={handleAvatar}
             ></input>
