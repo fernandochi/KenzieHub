@@ -74,7 +74,7 @@ const User = () => {
   };
 
   return (
-    <BodyDiv>
+    <BodyDiv className="background">
       <div className="center">
         <Search
           onChange={(e) => setSearch(e.target.value)}
@@ -132,7 +132,7 @@ const User = () => {
               xs={24}
               sm={24}
               md={24}
-              lg={12}
+              lg={24}
               xl={12}
               key={idx}
               style={{

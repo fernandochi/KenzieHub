@@ -107,7 +107,7 @@ const Login = () => {
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            Register
+            Login
           </Button>
         </Form.Item>
         {isAuthenticated === false && <span>Login ou senha inválidos.</span>}

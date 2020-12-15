@@ -95,7 +95,7 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
   return (
     <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
       <Card
-        style={{ minWidth: "280px", maxWidth: "550px", borderRadius: "15px" }}
+        style={{ width: 400, height: 500, borderRadius: "15px" }}
       >
         <Meta
           avatar={<Avatar src={userList.avatar_url} />}
@@ -103,7 +103,7 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
           description={userList.bio}
         />
         <Card
-          style={{ marginTop: 10 }}
+          style={{ marginTop: 10, minWidth: "280px", maxWidth: "550px" }}
           type="inner"
           title="Informações: "
           extra={
@@ -124,7 +124,7 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
         </Card>
         {out && (
           <Card
-            style={{ width: "100%" }}
+            style={{ width: "100%", height: "100%" }}
             tabList={tabList}
             activeTabKey={key}
             onTabChange={(key) => {
