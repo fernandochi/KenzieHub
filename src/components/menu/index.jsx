@@ -31,7 +31,8 @@ const MainMenu = () => {
 
   const handleClick = (evt) => {
     if (evt.key === "logout") {
-      localStorage.clear();
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       setCurrent("/");
       return history.push("/");
     }
@@ -45,10 +46,19 @@ const MainMenu = () => {
         <Menu.Item key="logout" icon={<LogoutOutlined />}>
           Logout
         </Menu.Item>
-        <Menu.Item key="/users/10/1" icon={<ContactsOutlined />}>
-          Lista de usuários
-        </Menu.Item>
-        <SubMenu key="SubMenu" icon={<UserOutlined />} title="Usuário">
+
+        <SubMenu
+          key="SubMenu"
+          icon={<ContactsOutlined />}
+          title="Desenvolvedores"
+        >
+          <Menu.Item key="/users/10/1">Lista de desenvolvedores</Menu.Item>
+          <Menu.Item key="/favorites-users">
+            Desenvolvedores favoritos
+          </Menu.Item>
+        </SubMenu>
+
+        <SubMenu key="personal" icon={<UserOutlined />} title="Usuário">
           <Menu.Item key="/profile">Profile</Menu.Item>
           <Menu.Item key="/portfolio">Portfólio</Menu.Item>
           <Menu.Item key="/technologies">Tecnologia</Menu.Item>

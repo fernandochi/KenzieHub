@@ -8,6 +8,7 @@ import Profile from "../pages/profile";
 import Portfolio from "../pages/portfolio";
 import Technologies from "../pages/technologies";
 import Users from "../pages/users";
+import FavoritesUsers from "../pages/favoritesUsers";
 
 import HomePage from "../pages/homePage";
 import UnauthorizedUsers from "../pages/unauthorizedUsers";
@@ -43,9 +44,8 @@ const MainRoutes = () => {
           dispatch(tryLoginThunk(JSON.parse(userLogged)));
         })
         .catch((err) => {
-          console.log("Local foi apagado");
-          console.log(err);
-          localStorage.clear();
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
           dispatch(setTokenThunk(""));
         });
     } else {
@@ -73,6 +73,9 @@ const MainRoutes = () => {
         </Route>
         <Route exact path="/users/:perPage/:page">
           <Users />
+        </Route>
+        <Route exact path="/favorites-users">
+          <FavoritesUsers />
         </Route>
         <Route path="/profile">
           <Profile />
