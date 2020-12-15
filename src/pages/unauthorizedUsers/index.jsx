@@ -20,7 +20,6 @@ const UnauthorizedUsers = () => {
 
   const [thereAreUsers, setThereAreUsers] = useState(false);
 
-  const [search, setSearch] = useState("");
   const [page, setPage] = useState(Number(params.page));
   const [perPage, setPerPage] = useState(Number(params.perPage));
   let userList = useSelector((state) => state.userList);
@@ -44,7 +43,7 @@ const UnauthorizedUsers = () => {
     thereAreMoreUsers();
     setPage(Number(params.page));
     dispatch(getUsersThunk(params.perPage, params.page));
-  }, [params]);
+  }, [params, nextUrl]);
 
   const previousPage = () => {
     setPage(page - 1);
@@ -110,15 +109,15 @@ const UnauthorizedUsers = () => {
         </Select>
       </NavigationDiv>
       {!!userList.length ? (
-        <Row
-          gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-          justify="center"
-          style={{ maxWidth: "100vw" }}
-        >
+        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify="center">
           {userList.map((item, idx) => (
             <Col
+              xs={24}
+              sm={24}
+              md={24}
+              lg={12}
+              xl={12}
               key={idx}
-              span={12}
               style={{
                 paddingBottom: "16px",
                 display: "flex",

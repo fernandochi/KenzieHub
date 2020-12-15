@@ -7,8 +7,6 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardUser from "../../components/cardUser";
 import axios from "axios";
-import UseAnimations from "react-useanimations";
-import loading from "react-useanimations/lib/loading";
 import "./style.css";
 
 const { Option } = Select;
@@ -80,7 +78,7 @@ const User = () => {
         <Search
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Filtre por tecnologias!"
-          style={{ width: "40%", minWidth: "306px", height: "50px" }}
+          style={{ width: "40%", minWidth: "280px", height: "50px" }}
         />
       </div>
       <NavigationDiv>
@@ -130,8 +128,12 @@ const User = () => {
         >
           {userList.map((item, idx) => (
             <Col
+              xs={24}
+              sm={24}
+              md={24}
+              lg={12}
+              xl={12}
               key={idx}
-              span={12}
               style={{
                 paddingBottom: "16px",
                 display: "flex",

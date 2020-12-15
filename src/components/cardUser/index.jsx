@@ -93,12 +93,13 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
   };
 
   return (
-    <Card style={{ width: 550, borderRadius: "15px" }}>
+    <Card
+      style={{ minWidth: "280px", maxWidth: "550px", borderRadius: "15px" }}
+    >
       <Meta
         avatar={<Avatar src={userList.avatar_url} />}
         title={userList.name}
         description={userList.bio}
-        extra="oi"
       />
       <Card
         style={{ marginTop: 10 }}
@@ -118,13 +119,20 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
           <li>Email: {userList.email}</li>
           <li>Course Module: {userList.course_module}</li>
           <li>
-            <span title={userList.contact}>Contact: {userList.contact}</span>
+            <span title={userList.contact}>
+              <a
+                href={userList.contact}
+                target="_blank "
+                rel="noopener noreferrer"
+              >
+                Contato
+              </a>
+            </span>
           </li>
         </ul>
       </Card>
       {out && (
         <Card
-          style={{ width: "100%" }}
           tabList={tabList}
           activeTabKey={key}
           onTabChange={(key) => {

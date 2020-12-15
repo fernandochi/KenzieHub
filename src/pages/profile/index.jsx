@@ -54,7 +54,7 @@ const Profile = () => {
   const [form] = Form.useForm();
 
   const token = useSelector((state) => state.token);
-  const user = useSelector((state) => state.user);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleAvatar = (ev) => {
     ev.preventDefault();
@@ -136,118 +136,118 @@ const Profile = () => {
         {errorRegister && <span>Dados Atualizados!</span>}
         {errorRegister === false && <span>Erro</span>}
       </div>
-      <div>
-        <CardUser userList={user} out />
 
-        <Form
-          ref={formRef}
-          {...formItemLayout}
-          onFinish={handleForm}
-          form={form}
-          name="register"
-          scrollToFirstError
+      <CardUser userList={user} out />
+
+      <Form
+        ref={formRef}
+        {...formItemLayout}
+        onFinish={handleForm}
+        form={form}
+        name="register"
+        scrollToFirstError
+      >
+        <h2>Atualize seus dados</h2>
+        <Form.Item
+          name="name"
+          label="Nome"
+          rules={[
+            {
+              required: false,
+              whitespace: true,
+            },
+          ]}
         >
-          <h2>Atualize seus dados</h2>
-          <Form.Item
-            name="name"
-            label="Nome"
-            rules={[
-              {
-                required: false,
-                whitespace: true,
-              },
-            ]}
+          <Input placeholder={user.name} />
+        </Form.Item>
+        <Form.Item
+          name="email"
+          label="E-mail"
+          rules={[
+            {
+              type: "email",
+              message: "Insira um e-mail válido!",
+            },
+            {
+              required: false,
+            },
+          ]}
+        >
+          <Input autoComplete="username" placeholder={user.email} />
+        </Form.Item>
+        <Form.Item
+          name="course_module"
+          label="Módulo do Curso"
+          rules={[
+            {
+              message: "Por favor, selecione o módulo que você está cursando",
+            },
+          ]}
+        >
+          <Select
+            placeholder="Selecione uma opção"
+            onChange={onCourseChange}
+            allowClear
           >
-            <Input placeholder={user.name} />
-          </Form.Item>
-          <Form.Item
-            name="email"
-            label="E-mail"
-            rules={[
-              {
-                type: "email",
-                message: "Insira um e-mail válido!",
-              },
-              {
-                required: false,
-              },
-            ]}
-          >
-            <Input autoComplete="username" placeholder={user.email} />
-          </Form.Item>
-          <Form.Item
-            name="course_module"
-            label="Módulo do Curso"
-            rules={[
-              {
-                message: "Por favor, selecione o módulo que você está cursando",
-              },
-            ]}
-          >
-            <Select
-              placeholder="Selecione uma opção"
-              onChange={onCourseChange}
-              allowClear
-            >
-              <Option value="first">
-                Primeiro módulo (Introdução ao Frontend)
-              </Option>
-              <Option value="second">Segundo módulo (Frontend Avançado)</Option>
-              <Option value="three">
-                Terceiro módulo (Introdução ao Backend)
-              </Option>
-              <Option value="four">Quarto módulo (Backend Avançado)</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item name="bio" label="Sobre mim">
-            <Input.TextArea placeholder={user.bio} />
-          </Form.Item>
-          <Form.Item
-            name="contact"
-            label="LinkedIn"
-            rules={[
-              {
-                required: false,
-              },
-              {
-                type: "url",
-                message: "Insira uma forma de contato válida!",
-              },
-            ]}
-          >
-            <Input placeholder={user.contact} />
-          </Form.Item>
-          <Form.Item
-            name="old_password"
-            label="Senha Antiga"
-            rules={[
-              {
-                required: false,
-              },
-            ]}
-          >
-            <Input.Password autoComplete="new-password" />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            label="Nova Senha"
-            rules={[
-              {
-                required: false,
-                min: 6,
-                message: "É necessário no mínimo 6 caracteres!",
-              },
-            ]}
-          >
-            <Input.Password autoComplete="new-password" />
-          </Form.Item>
-          <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
-              Atualizar Dados
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+            <Option value="first">
+              Primeiro módulo (Introdução ao Frontend)
+            </Option>
+            <Option value="second">Segundo módulo (Frontend Avançado)</Option>
+            <Option value="three">
+              Terceiro módulo (Introdução ao Backend)
+            </Option>
+            <Option value="four">Quarto módulo (Backend Avançado)</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item name="bio" label="Sobre mim">
+          <Input.TextArea placeholder={user.bio} />
+        </Form.Item>
+        <Form.Item
+          name="contact"
+          label="LinkedIn"
+          rules={[
+            {
+              required: false,
+            },
+            {
+              type: "url",
+              message: "Insira uma forma de contato válida!",
+            },
+          ]}
+        >
+          <Input placeholder={user.contact} />
+        </Form.Item>
+        <Form.Item
+          name="old_password"
+          label="Senha Antiga"
+          rules={[
+            {
+              required: false,
+            },
+          ]}
+        >
+          <Input.Password autoComplete="new-password" />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          label="Nova Senha"
+          rules={[
+            {
+              required: false,
+              min: 6,
+              message: "É necessário no mínimo 6 caracteres!",
+            },
+          ]}
+        >
+          <Input.Password autoComplete="new-password" />
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit">
+            Atualizar Dados
+          </Button>
+        </Form.Item>
+      </Form>
+
       <form>
         <label>Novo Avatar</label>
         <input

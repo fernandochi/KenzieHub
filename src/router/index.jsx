@@ -40,8 +40,9 @@ const MainRoutes = () => {
           headers: { Authorization: `Bearer ${tokenLocalStorage}` },
         })
         .then((data) => {
+          console.log(data);
           dispatch(setTokenThunk(tokenLocalStorage));
-          dispatch(tryLoginThunk(JSON.parse(userLogged)));
+          dispatch(tryLoginThunk(data.data));
         })
         .catch((err) => {
           localStorage.removeItem("token");
