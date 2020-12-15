@@ -1,4 +1,4 @@
-import { Card, Avatar, Rate } from "antd";
+import { Card, Avatar, Rate, Carousel } from "antd";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateFavoriteThunk } from "../../store/modules/favoritesUsers/thunks";
@@ -23,8 +23,39 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
   const dispatch = useDispatch();
 
   const contentList = {
-    Works: <p>{JSON.stringify(userList.works)}</p>,
-    Techs: <p>{JSON.stringify(userList.techs)}</p>,
+    Works: (
+      <Carousel autoplay>
+        {userList.works.map((item) => {
+          return (
+            <div key={item.id}>
+              <p>{item.title}</p>
+              <p>{item.description}</p>
+              <p>
+                <a
+                  href={item.deploy_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Link
+                </a>
+              </p>
+            </div>
+          );
+        })}
+      </Carousel>
+    ),
+    Techs: (
+      <Carousel autoplay>
+        {userList.techs.map((item) => {
+          return (
+            <div key={item.id}>
+              <p>{item.title}</p>
+              <p>{item.status}</p>
+            </div>
+          );
+        })}
+      </Carousel>
+    ),
   };
 
   useEffect(() => {
@@ -86,7 +117,9 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
         <ul>
           <li>Email: {userList.email}</li>
           <li>Course Module: {userList.course_module}</li>
-          <li>Contact: {userList.contact}</li>
+          <li>
+            <span title={userList.contact}>Contact: {userList.contact}</span>
+          </li>
         </ul>
       </Card>
       {out && (

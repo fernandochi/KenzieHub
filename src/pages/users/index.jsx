@@ -71,7 +71,7 @@ const User = () => {
   const handleChange = (values) => {
     setPerPage(Number(values.key));
     dispatch(getUsersThunk(values.key, 1));
-    history.push(`/users/${values.key}/${1}`);
+    history.push(`/users/${values.key}/${page}`);
   };
 
   return (
@@ -144,7 +144,9 @@ const User = () => {
         </Row>
       ) : (
         <div>
-          <UseAnimations animation={loading} />
+          <h2 style={{ color: "whitesmoke", textAlign: "center" }}>
+            Sua busca não retornou resultados
+          </h2>
         </div>
       )}
     </BodyDiv>
