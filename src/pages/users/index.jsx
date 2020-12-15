@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import CardUser from "../../components/cardUser";
 import axios from "axios";
 import "./style.css";
+import { motion } from "framer-motion";
 
 const { Option } = Select;
 const { Search } = Input;

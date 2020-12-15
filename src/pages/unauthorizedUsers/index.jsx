@@ -8,6 +8,11 @@ import CardUser from "../../components/cardUser";
 import { AppButton, BodyDiv, NavigationDiv, PageDiv } from "../users/style";
 import axios from "axios";
 
+import UseAnimations from "react-useanimations";
+import loading from "react-useanimations/lib/loading";
+
+import { motion } from "framer-motion";
+
 const { Option } = Select;
 
 const UnauthorizedUsers = () => {
@@ -121,7 +126,9 @@ const UnauthorizedUsers = () => {
                 justifyContent: "center",
               }}
             >
-              <CardUser userList={item} key={item.id} />
+              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                <CardUser userList={item} key={item.id} />
+              </motion.div>
             </Col>
           ))}
         </Row>

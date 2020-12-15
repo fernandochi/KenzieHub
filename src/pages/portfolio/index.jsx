@@ -9,6 +9,8 @@ import tryLoginThunk from "../../store/modules/userLogged/thunks";
 
 import CardUserWork from "../../components/cardUserWork";
 
+import { motion } from "framer-motion";
+
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -78,78 +80,80 @@ const Portfolio = () => {
 
   return (
     <>
-      <Form
-        ref={formRef}
-        {...formItemLayout}
-        form={form}
-        name="register"
-        onFinish={onFinish}
-        scrollToFirstError
-      >
-        <h1 style={{ textAlign: "center" }}>Adicione uma nova Profissão</h1>
-        <Form.Item
-          name="title"
-          label="Título"
-          rules={[
-            {
-              required: true,
-              message: "Por favor, insira um título para o trabalho.",
-              whitespace: true,
-            },
-          ]}
+      <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
+        <Form
+          ref={formRef}
+          {...formItemLayout}
+          form={form}
+          name="register"
+          onFinish={onFinish}
+          scrollToFirstError
         >
-          <Input />
-        </Form.Item>
+          <h1>Adicione uma nova Profissão</h1>
+          <Form.Item
+            name="title"
+            label="Título"
+            rules={[
+              {
+                required: true,
+                message: "Por favor, insira um título para o trabalho.",
+                whitespace: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
 
-        <Form.Item
-          name="description"
-          label="Descrição"
-          rules={[
-            {
-              required: true,
-              message: "Por favor, insira uma descrição para o trabalho.",
-              whitespace: true,
-            },
-          ]}
-        >
-          <Input.TextArea />
-        </Form.Item>
+          <Form.Item
+            name="description"
+            label="Descrição"
+            rules={[
+              {
+                required: true,
+                message: "Por favor, insira uma descrição para o trabalho.",
+                whitespace: true,
+              },
+            ]}
+          >
+            <Input.TextArea />
+          </Form.Item>
 
-        <Form.Item
-          name="deploy_url"
-          label="Deploy URL"
-          rules={[
-            {
-              required: true,
-              message: "Por favor, insira a URL do trabalho.",
-              whitespace: true,
-            },
-            {
-              type: "url",
-              message: "Insira uma forma de URL válida.",
-            },
-          ]}
-        >
-          <Input placeholder="https://kenziehub.me" />
-        </Form.Item>
+          <Form.Item
+            name="deploy_url"
+            label="Deploy URL"
+            rules={[
+              {
+                required: true,
+                message: "Por favor, insira a URL do trabalho.",
+                whitespace: true,
+              },
+              {
+                type: "url",
+                message: "Insira uma forma de URL válida.",
+              },
+            ]}
+          >
+            <Input placeholder="https://kenziehub.me" />
+          </Form.Item>
 
-        <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
-            Add Tech
-          </Button>
-        </Form.Item>
-      </Form>
-      <div></div>
-      {errorWork && (
-        <p style={{ color: "red" }}>Houve algum erro de requisição.</p>
-      )}
-      <Card>
-        <h2 style={{ textAlign: "center" }}>Profissões Cadastradas</h2>
-      </Card>
-      {!!userLogged.works &&
-        userLogged.works.map((work, index) => (
-          <CardUserWork work={work} key={index} />
-        ))}
+          <Form.Item {...tailFormItemLayout}>
+            <Button type="primary" htmlType="submit">
+              Add Tech
+            </Button>
+          </Form.Item>
+        </Form>
+        <div></div>
+        {errorWork && (
+          <p style={{ color: "red" }}>Houve algum erro de requisição.</p>
+        )}
+        <Card>
+          <h2>Profissões Cadastradas</h2>
+        </Card>
+        {!!userLogged.works &&
+          userLogged.works.map((work, index) => (
+            <CardUserWork work={work} key={index} />
+          ))}
+      </motion.div>
     </>
   );
 };

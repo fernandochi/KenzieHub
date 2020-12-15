@@ -2,6 +2,7 @@ import { Card, Avatar, Rate, Carousel } from "antd";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateFavoriteThunk } from "../../store/modules/favoritesUsers/thunks";
+import { motion } from "framer-motion";
 
 const { Meta } = Card;
 
@@ -92,56 +93,49 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
   };
 
   return (
-    <Card
-      style={{ minWidth: "280px", maxWidth: "550px", borderRadius: "15px" }}
-    >
-      <Meta
-        avatar={<Avatar src={userList.avatar_url} />}
-        title={userList.name}
-        description={userList.bio}
-      />
+    <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
       <Card
-        style={{ marginTop: 10 }}
-        type="inner"
-        title="Informações: "
-        extra={
-          <Rate
-            count="3"
-            defaultValue="0"
-            value={countStars}
-            onChange={handleChange}
-            disabled={favorited ? false : true}
-          />
-        }
+        style={{ minWidth: "280px", maxWidth: "550px", borderRadius: "15px" }}
       >
-        <ul>
-          <li>Email: {userList.email}</li>
-          <li>Course Module: {userList.course_module}</li>
-          <li>
-            <span title={userList.contact}>
-              <a
-                href={userList.contact}
-                target="_blank "
-                rel="noopener noreferrer"
-              >
-                Contato
-              </a>
-            </span>
-          </li>
-        </ul>
-      </Card>
-      {out && (
+        <Meta
+          avatar={<Avatar src={userList.avatar_url} />}
+          title={userList.name}
+          description={userList.bio}
+        />
         <Card
-          tabList={tabList}
-          activeTabKey={key}
-          onTabChange={(key) => {
-            onTabChange(key, "key");
-          }}
+          style={{ marginTop: 10 }}
+          type="inner"
+          title="Informações: "
+          extra={
+            <Rate
+              count="3"
+              defaultValue="0"
+              value={countStars}
+              onChange={handleChange}
+              disabled={favorited ? false : true}
+            />
+          }
         >
-          {contentList[key]}
+          <ul>
+            <li>Email: {userList.email}</li>
+            <li>Course Module: {userList.course_module}</li>
+            <li>Contact: {userList.contact}</li>
+          </ul>
         </Card>
-      )}
-    </Card>
+        {out && (
+          <Card
+            style={{ width: "100%" }}
+            tabList={tabList}
+            activeTabKey={key}
+            onTabChange={(key) => {
+              onTabChange(key, "key");
+            }}
+          >
+            {contentList[key]}
+          </Card>
+        )}
+      </Card>
+    </motion.div>
   );
 };
 
