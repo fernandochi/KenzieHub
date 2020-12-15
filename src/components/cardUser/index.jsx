@@ -64,7 +64,6 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
       const [isUserFavored] = favorites.filter(({ user }) => {
         return user.id === userList.id;
       });
-      console.log(isUserFavored);
       isUserFavored && setCountStars(isUserFavored.starts);
     }
   }, []);

@@ -1,4 +1,4 @@
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 
 import axios from "axios";
 
@@ -40,6 +40,10 @@ const tailFormItemLayout = {
   },
 };
 
+const success = () => {
+  message.success("Login efetuado com sucesso!");
+};
+
 const Login = () => {
   const [isAuthenticated, setAuthentication] = useState(undefined);
 
@@ -51,6 +55,7 @@ const Login = () => {
     axios
       .post("https://kenziehub.me/sessions", { ...data })
       .then((res) => {
+        success();
         window.localStorage.setItem("token", res.data.token);
         window.localStorage.setItem("user", JSON.stringify(res.data.user));
         dispatch(tryLoginThunk(res.data.user));
