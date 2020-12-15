@@ -7,10 +7,14 @@ import tryLoginThunk from "../../store/modules/userLogged/thunks";
 import CardUser from "../../components/cardUser";
 
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-import { Form, Input, Button, Select } from "antd";
+import "./styles.css";
+
+import { Form, Input, Button, Select, message, Typography } from "antd";
 
 const { Option } = Select;
+const { Title } = Typography;
 
 const formItemLayout = {
   labelCol: {
@@ -43,6 +47,14 @@ const tailFormItemLayout = {
   },
 };
 
+const success = () => {
+  message.success("Dados Atualizados");
+};
+
+const error = (err) => {
+  message.error("Erro: " + err);
+};
+
 const Profile = () => {
   const [errorRegister, setErrorRegister] = useState(undefined);
   const [isImgAvailable, setImg] = useState(undefined);
@@ -52,6 +64,7 @@ const Profile = () => {
 
   const formRef = React.createRef();
   const [form] = Form.useForm();
+  const history = useHistory();
 
   const token = useSelector((state) => state.token);
   const user = useSelector((state) => state.user);
@@ -60,14 +73,19 @@ const Profile = () => {
     ev.preventDefault();
 
     const data = new FormData();
+    // console.log(ev);
 
-    if (ev.target.files[0].name.includes(" ")) {
-      setImg(false);
-      return;
-    }
+    // if (!ev.target.files) {
+    //   console.log(ev.target.files);
+    //   if (ev.target.files[0].name.includes(" ") || !!!ev.target.files[0].name) {
+    //     console.log(ev.target.files[0]);
+    //     setImg(false);
+    //     return;
+    //   }
+    // }
 
     data.append("avatar", ev.target.files[0]);
-
+    console.log(ev);
     axios
       .patch("https://kenziehub.me/users/avatar", data, {
         headers: {
@@ -77,12 +95,13 @@ const Profile = () => {
       .then((res) => {
         dispatch(tryLoginThunk(res.data));
         localStorage.setItem("user", JSON.stringify(res.data));
-        setImg(true);
+        success();
       })
-      .catch((err) => setImg(false));
+      .catch((err) => error(err.message));
   };
 
   const handleForm = (data) => {
+    const isPassword = data.password;
     axios
       .put(
         "https://kenziehub.me/profile",
@@ -97,6 +116,11 @@ const Profile = () => {
         localStorage.setItem("user", JSON.stringify(res.data));
         dispatch(tryLoginThunk(res.data));
         setErrorRegister(true);
+        if (!!isPassword) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          history.push("/login");
+        }
       })
       .catch((err) => {
         setErrorRegister(false);
@@ -140,6 +164,7 @@ const Profile = () => {
         <CardUser userList={user} out />
 
         <Form
+          style={{ textAlign: "left" }}
           ref={formRef}
           {...formItemLayout}
           onFinish={handleForm}
@@ -147,6 +172,12 @@ const Profile = () => {
           name="register"
           scrollToFirstError
         >
+          <Title
+            style={{ marginLeft: "33%", padding: 15, paddingLeft: 0 }}
+            level={3}
+          >
+            Mudar dados
+          </Title>
           <Form.Item
             name="name"
             label="Nome"
@@ -236,6 +267,14 @@ const Profile = () => {
                 min: 6,
                 message: "É necessário no mínimo 6 caracteres!",
               },
+              {
+                pattern: /^((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1}).*$/,
+                message: "Mínimo 1 caracter especial.",
+              },
+              {
+                pattern: /^((?=.*[A-Z]){1}).*$/,
+                message: "Mínimo 1 caracter maiúscula.",
+              },
             ]}
           >
             <Input.Password autoComplete="new-password" />
@@ -247,29 +286,34 @@ const Profile = () => {
           </Form.Item>
         </Form>
       </div>
-      <form>
-        <label>Novo Avatar</label>
-        <input
-          type="file"
-          ref={register}
-          name="avatar"
-          id="avatar"
-          onChange={handleAvatar}
-        ></input>
-        {/*usar botao para atualizar o avatar, nao atualizar sozinho?*/}
-        {isImgAvailable === false && (
-          <>
-            <br />
-            <span>O nome da imagem nao deve conter espaços!</span>
-          </>
-        )}
-        {isImgAvailable === true && (
-          <>
-            <br />
-            <span>Dados Atualizados!</span>
-          </>
-        )}
-      </form>
+      <div>
+        <Form
+          ref={formRef}
+          {...formItemLayout}
+          form={form}
+          name="register"
+          scrollToFirstError
+        >
+          <Title
+            style={{ marginLeft: "33%", padding: 5, paddingLeft: 0 }}
+            level={3}
+          >
+            Novo Avatar
+          </Title>
+          <Form.Item label="Novo Avatar">
+            <input
+              className="inputfile"
+              id="avatar"
+              name="avatar"
+              ref={register}
+              type="file"
+              onChange={handleAvatar}
+            ></input>
+            {/* {isImgAvailable === false && <Space>{error()}</Space>} */}
+            {/* {isImgAvailable === true && <Space>{success()}</Space>} */}
+          </Form.Item>
+        </Form>
+      </div>
     </>
   );
 };

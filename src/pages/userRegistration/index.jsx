@@ -132,6 +132,14 @@ const UserRegistration = () => {
               required: true,
               message: "Por favor, insira sua senha!",
             },
+            {
+              pattern: /^((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1}).*$/,
+              message: "Mínimo 1 caracter especial.",
+            },
+            {
+              pattern: /^((?=.*[A-Z]){1}).*$/,
+              message: "Mínimo 1 caracter maiúscula.",
+            },
           ]}
           hasFeedback
         >
