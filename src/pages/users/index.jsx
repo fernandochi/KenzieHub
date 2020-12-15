@@ -130,6 +130,7 @@ const User = () => {
         >
           {userList.map((item, idx) => (
             <Col
+              key={idx}
               span={12}
               style={{
                 paddingBottom: "16px",
@@ -137,7 +138,7 @@ const User = () => {
                 justifyContent: "center",
               }}
             >
-              <CardUser userList={item} key={idx} out />
+              <CardUser userList={item} key={item.id} out favorited />
             </Col>
           ))}
         </Row>

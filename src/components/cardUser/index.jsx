@@ -1,5 +1,7 @@
-import { Card, Avatar, Carousel } from "antd";
-import { useState } from "react";
+import { Card, Avatar, Rate, Carousel } from "antd";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateFavoriteThunk } from "../../store/modules/favoritesUsers/thunks";
 
 const { Meta } = Card;
 
@@ -14,8 +16,11 @@ const tabList = [
   },
 ];
 
-const CardUser = ({ userList, out = false }) => {
+const CardUser = ({ userList, out = false, favorited = false }) => {
   const [key, setKey] = useState("Works");
+  const [countStars, setCountStars] = useState(0);
+
+  const dispatch = useDispatch();
 
   const contentList = {
     Works: (
@@ -53,8 +58,38 @@ const CardUser = ({ userList, out = false }) => {
     ),
   };
 
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem("favorites"));
+    if (!!favorites) {
+      const [isUserFavored] = favorites.filter(({ user }) => {
+        return user.id === userList.id;
+      });
+      console.log(isUserFavored);
+      isUserFavored && setCountStars(isUserFavored.starts);
+    }
+  }, []);
+
   const onTabChange = (key, type) => {
     setKey(key);
+  };
+
+  const handleChange = (value) => {
+    const favorites = JSON.parse(localStorage.getItem("favorites"));
+
+    if (!!favorites) {
+      const removeUser = favorites.filter(({ user }) => {
+        return user.id !== userList.id;
+      });
+
+      const newFavorites = [...removeUser, { user: userList, starts: value }];
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
+      dispatch(updateFavoriteThunk(newFavorites));
+    } else {
+      const newFavorites = [{ user: userList, starts: value }];
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
+      dispatch(updateFavoriteThunk(newFavorites));
+    }
+    setCountStars(value);
   };
 
   return (
@@ -63,9 +98,22 @@ const CardUser = ({ userList, out = false }) => {
         avatar={<Avatar src={userList.avatar_url} />}
         title={userList.name}
         description={userList.bio}
+        extra="oi"
       />
-
-      <Card style={{ marginTop: 10 }} type="inner" title="Inner Card title">
+      <Card
+        style={{ marginTop: 10 }}
+        type="inner"
+        title="Informações: "
+        extra={
+          <Rate
+            count="3"
+            defaultValue="0"
+            value={countStars}
+            onChange={handleChange}
+            disabled={favorited ? false : true}
+          />
+        }
+      >
         <ul>
           <li>Email: {userList.email}</li>
           <li>Course Module: {userList.course_module}</li>
