@@ -110,7 +110,7 @@ const Technologies = () => {
         onFinish={onFinish}
         scrollToFirstError
       >
-        <h1>Adicione uma nova Tecnologia</h1>
+        <h1 style={{ textAlign: "center" }}>Adicione uma nova Tecnologia</h1>
         <Form.Item
           name="title"
           label="Tecnologia"
@@ -157,7 +157,7 @@ const Technologies = () => {
       )}
 
       <Card>
-        <h2>Tecnologias Cadastradas</h2>
+        <h2 style={{ textAlign: "center" }}>Tecnologias Cadastradas</h2>
       </Card>
       {!!userLogged.techs &&
         userLogged.techs.map((tech, index) => (

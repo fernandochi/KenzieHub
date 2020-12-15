@@ -191,7 +191,7 @@ const Profile = () => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder={user.name} />
           </Form.Item>
           <Form.Item
             name="email"
@@ -206,7 +206,7 @@ const Profile = () => {
               },
             ]}
           >
-            <Input autoComplete="username" />
+            <Input autoComplete="username" placeholder={user.email} />
           </Form.Item>
           <Form.Item
             name="course_module"
@@ -233,7 +233,7 @@ const Profile = () => {
             </Select>
           </Form.Item>
           <Form.Item name="bio" label="Sobre mim">
-            <Input.TextArea />
+            <Input.TextArea placeholder={user.bio} />
           </Form.Item>
           <Form.Item
             name="contact"
@@ -248,7 +248,7 @@ const Profile = () => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder={user.contact} />
           </Form.Item>
           <Form.Item
             name="old_password"

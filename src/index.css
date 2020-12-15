@@ -31,3 +31,42 @@ code {
   color: whitesmoke;
   font-size: 21px;
 }
+.ant-btn-primary {
+  background: #818ba4;
+  border-color: #818ba4;
+  font-weight: bolder;
+  width: 190px;
+  height: 45px;
+  font-size: 1.2rem;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  color: #fff;
+  background: #818ba4;
+  border-color: #818ba4;
+}
+
+.anticon svg {
+  display: inline-block;
+}
+
+.ant-modal-confirm-body
+  > .anticon
+  + .ant-modal-confirm-title
+  + .ant-modal-confirm-content {
+  margin-left: 0;
+}
+
+.centerForm {
+  background-color: red;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+li {
+  overflow: hidden;
+}

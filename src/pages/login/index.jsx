@@ -12,30 +12,30 @@ import tryLoginThunk from "../../store/modules/userLogged/thunks";
 const formItemLayout = {
   labelCol: {
     xs: {
-      span: 7,
+      span: 14,
     },
     sm: {
-      span: 4,
+      span: 8,
     },
   },
   wrapperCol: {
     xs: {
-      span: 7,
+      span: 14,
     },
     sm: {
-      span: 5,
+      span: 10,
     },
   },
 };
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
-      span: 12,
+      span: 24,
       offset: 0,
     },
     sm: {
-      span: 8,
-      offset: 4,
+      span: 16,
+      offset: 8,
     },
   },
 };
@@ -72,10 +72,11 @@ const Login = () => {
       name="register"
       onFinish={tryLogin}
       scrollToFirstError
+      className="centerForm"
     >
       <Form.Item
         name="email"
-        label="E-Mail"
+        label="E-mail"
         rules={[
           {
             type: "email",
@@ -104,7 +105,7 @@ const Login = () => {
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
-          Register
+          Login
         </Button>
       </Form.Item>
       {isAuthenticated === false && <span>Login ou senha inválidos.</span>}

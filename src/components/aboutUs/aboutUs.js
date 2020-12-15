@@ -23,7 +23,8 @@ const devInfo = [
   {
     name: "Fernando",
     img: "./images/fotos-dev/Fernando.jpg",
-    bio: lorem,
+    bio:
+      "Engenheiro civil, projeto de esportista, leitor e gosta de comida. Admirador como a tecnologia facilita nossas vida.",
     title: "Tech Leader",
     linkedin: "https://www.linkedin.com/in/fernando-l-santos/",
     github: "https://github.com/fernandochi",
