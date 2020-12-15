@@ -10,6 +10,8 @@ import axios from "axios";
 
 import { Form, Input, Button, Select } from "antd";
 
+import { motion } from "framer-motion";
+
 const { Option } = Select;
 
 const formItemLayout = {
@@ -139,113 +141,118 @@ const Profile = () => {
       <div>
         <CardUser userList={user} out />
 
-        <Form
-          ref={formRef}
-          {...formItemLayout}
-          onFinish={handleForm}
-          form={form}
-          name="register"
-          scrollToFirstError
-        >
-          <Form.Item
-            name="name"
-            label="Nome"
-            rules={[
-              {
-                required: false,
-                whitespace: true,
-              },
-            ]}
+        <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
+          <Form
+            ref={formRef}
+            {...formItemLayout}
+            onFinish={handleForm}
+            form={form}
+            name="register"
+            scrollToFirstError
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="email"
-            label="E-mail"
-            rules={[
-              {
-                type: "email",
-                message: "Insira um e-mail válido!",
-              },
-              {
-                required: false,
-              },
-            ]}
-          >
-            <Input autoComplete="username" />
-          </Form.Item>
-          <Form.Item
-            name="course_module"
-            label="Módulo do Curso"
-            rules={[
-              {
-                message: "Por favor, selecione o módulo que você está cursando",
-              },
-            ]}
-          >
-            <Select
-              placeholder="Selecione uma opção"
-              onChange={onCourseChange}
-              allowClear
+            <Form.Item
+              name="name"
+              label="Nome"
+              rules={[
+                {
+                  required: false,
+                  whitespace: true,
+                },
+              ]}
             >
-              <Option value="first">
-                Primeiro módulo (Introdução ao Frontend)
-              </Option>
-              <Option value="second">Segundo módulo (Frontend Avançado)</Option>
-              <Option value="three">
-                Terceiro módulo (Introdução ao Backend)
-              </Option>
-              <Option value="four">Quarto módulo (Backend Avançado)</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item name="bio" label="Sobre mim">
-            <Input.TextArea />
-          </Form.Item>
-          <Form.Item
-            name="contact"
-            label="LinkedIn"
-            rules={[
-              {
-                required: false,
-              },
-              {
-                type: "url",
-                message: "Insira uma forma de contato válida!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="old_password"
-            label="Senha Antiga"
-            rules={[
-              {
-                required: false,
-              },
-            ]}
-          >
-            <Input.Password autoComplete="new-password" />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            label="Nova Senha"
-            rules={[
-              {
-                required: false,
-                min: 6,
-                message: "É necessário no mínimo 6 caracteres!",
-              },
-            ]}
-          >
-            <Input.Password autoComplete="new-password" />
-          </Form.Item>
-          <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
-              Atualizar Dados
-            </Button>
-          </Form.Item>
-        </Form>
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="email"
+              label="E-mail"
+              rules={[
+                {
+                  type: "email",
+                  message: "Insira um e-mail válido!",
+                },
+                {
+                  required: false,
+                },
+              ]}
+            >
+              <Input autoComplete="username" />
+            </Form.Item>
+            <Form.Item
+              name="course_module"
+              label="Módulo do Curso"
+              rules={[
+                {
+                  message:
+                    "Por favor, selecione o módulo que você está cursando",
+                },
+              ]}
+            >
+              <Select
+                placeholder="Selecione uma opção"
+                onChange={onCourseChange}
+                allowClear
+              >
+                <Option value="first">
+                  Primeiro módulo (Introdução ao Frontend)
+                </Option>
+                <Option value="second">
+                  Segundo módulo (Frontend Avançado)
+                </Option>
+                <Option value="three">
+                  Terceiro módulo (Introdução ao Backend)
+                </Option>
+                <Option value="four">Quarto módulo (Backend Avançado)</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item name="bio" label="Sobre mim">
+              <Input.TextArea />
+            </Form.Item>
+            <Form.Item
+              name="contact"
+              label="LinkedIn"
+              rules={[
+                {
+                  required: false,
+                },
+                {
+                  type: "url",
+                  message: "Insira uma forma de contato válida!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="old_password"
+              label="Senha Antiga"
+              rules={[
+                {
+                  required: false,
+                },
+              ]}
+            >
+              <Input.Password autoComplete="new-password" />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              label="Nova Senha"
+              rules={[
+                {
+                  required: false,
+                  min: 6,
+                  message: "É necessário no mínimo 6 caracteres!",
+                },
+              ]}
+            >
+              <Input.Password autoComplete="new-password" />
+            </Form.Item>
+            <Form.Item {...tailFormItemLayout}>
+              <Button type="primary" htmlType="submit">
+                Atualizar Dados
+              </Button>
+            </Form.Item>
+          </Form>
+        </motion.div>
       </div>
       <form>
         <label>Novo Avatar</label>

@@ -9,6 +9,8 @@ import { useDispatch } from "react-redux";
 import { setTokenThunk } from "../../store/modules/token/thunks";
 import tryLoginThunk from "../../store/modules/userLogged/thunks";
 
+import { motion } from "framer-motion";
+
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -61,49 +63,51 @@ const Login = () => {
   };
 
   return (
-    <Form
-      {...formItemLayout}
-      form={form}
-      name="register"
-      onFinish={tryLogin}
-      scrollToFirstError
-    >
-      <Form.Item
-        name="email"
-        label="E-Mail"
-        rules={[
-          {
-            type: "email",
-            message: "Insira um e-mail válido!",
-          },
-          {
-            required: true,
-            message: "Por favor, insira seu e-mail.",
-            whitespace: true,
-          },
-        ]}
+    <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
+      <Form
+        {...formItemLayout}
+        form={form}
+        name="register"
+        onFinish={tryLogin}
+        scrollToFirstError
       >
-        <Input autoComplete="username" />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        label="Senha"
-        rules={[
-          {
-            required: true,
-            message: "Por favor, insira sua senha.",
-          },
-        ]}
-      >
-        <Input.Password autoComplete="current-password" />
-      </Form.Item>
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Register
-        </Button>
-      </Form.Item>
-      {isAuthenticated === false && <span>Login ou senha inválidos.</span>}
-    </Form>
+        <Form.Item
+          name="email"
+          label="E-Mail"
+          rules={[
+            {
+              type: "email",
+              message: "Insira um e-mail válido!",
+            },
+            {
+              required: true,
+              message: "Por favor, insira seu e-mail.",
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input autoComplete="username" />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          label="Senha"
+          rules={[
+            {
+              required: true,
+              message: "Por favor, insira sua senha.",
+            },
+          ]}
+        >
+          <Input.Password autoComplete="current-password" />
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit">
+            Register
+          </Button>
+        </Form.Item>
+        {isAuthenticated === false && <span>Login ou senha inválidos.</span>}
+      </Form>
+    </motion.div>
   );
 };
 

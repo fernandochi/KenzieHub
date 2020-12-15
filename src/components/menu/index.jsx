@@ -71,9 +71,11 @@ const MainMenu = () => {
       <Menu.Item key="/login" icon={<LoginOutlined />}>
         Login
       </Menu.Item>
+
       <Menu.Item key="/user-registration" icon={<FileDoneOutlined />}>
         Cadastro
       </Menu.Item>
+
       <Menu.Item key="/unauthorized-users/10/1" icon={<ContactsOutlined />}>
         Usuários
       </Menu.Item>

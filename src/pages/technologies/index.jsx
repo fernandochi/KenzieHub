@@ -9,6 +9,8 @@ import tryLoginThunk from "../../store/modules/userLogged/thunks";
 
 import CardUserTech from "../../components/cardUserTech/index";
 
+import { motion } from "framer-motion";
+
 const { Option } = Select;
 
 const formItemLayout = {
@@ -102,67 +104,69 @@ const Technologies = () => {
 
   return (
     <>
-      <Form
-        ref={formRef}
-        {...formItemLayout}
-        form={form}
-        name="register"
-        onFinish={onFinish}
-        scrollToFirstError
-      >
-        <h1>Adicione uma nova Tecnologia</h1>
-        <Form.Item
-          name="title"
-          label="Tecnologia"
-          rules={[
-            {
-              required: true,
-              message: "Por favor, insira uma tecnologia.",
-              whitespace: true,
-            },
-          ]}
+      <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
+        <Form
+          ref={formRef}
+          {...formItemLayout}
+          form={form}
+          name="register"
+          onFinish={onFinish}
+          scrollToFirstError
         >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="status"
-          label="Nível"
-          rules={[
-            {
-              required: true,
-              message:
-                "Por favor, selecione o nível que você possui nessa tecnologia.",
-            },
-          ]}
-        >
-          <Select
-            placeholder="Selecione uma opção"
-            onChange={onNivelChange}
-            allowClear
+          <h1>Adicione uma nova Tecnologia</h1>
+          <Form.Item
+            name="title"
+            label="Tecnologia"
+            rules={[
+              {
+                required: true,
+                message: "Por favor, insira uma tecnologia.",
+                whitespace: true,
+              },
+            ]}
           >
-            <Option value="novice">Iniciante</Option>
-            <Option value="intermediate">Intermediário</Option>
-            <Option value="advanced">Avançado</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
-            Add Tech
-          </Button>
-        </Form.Item>
-      </Form>
-      {errorTech && (
-        <p style={{ color: "red" }}>Já foi adicionado essa tecnologia.</p>
-      )}
+            <Input />
+          </Form.Item>
 
-      <Card>
-        <h2>Tecnologias Cadastradas</h2>
-      </Card>
-      {!!userLogged.techs &&
-        userLogged.techs.map((tech, index) => (
-          <CardUserTech tech={tech} key={index} />
-        ))}
+          <Form.Item
+            name="status"
+            label="Nível"
+            rules={[
+              {
+                required: true,
+                message:
+                  "Por favor, selecione o nível que você possui nessa tecnologia.",
+              },
+            ]}
+          >
+            <Select
+              placeholder="Selecione uma opção"
+              onChange={onNivelChange}
+              allowClear
+            >
+              <Option value="novice">Iniciante</Option>
+              <Option value="intermediate">Intermediário</Option>
+              <Option value="advanced">Avançado</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item {...tailFormItemLayout}>
+            <Button type="primary" htmlType="submit">
+              Add Tech
+            </Button>
+          </Form.Item>
+        </Form>
+        {errorTech && (
+          <p style={{ color: "red" }}>Já foi adicionado essa tecnologia.</p>
+        )}
+
+        <Card>
+          <h2>Tecnologias Cadastradas</h2>
+        </Card>
+        {!!userLogged.techs &&
+          userLogged.techs.map((tech, index) => (
+            <CardUserTech tech={tech} key={index} />
+          ))}
+      </motion.div>
     </>
   );
 };

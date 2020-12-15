@@ -10,6 +10,7 @@ import axios from "axios";
 import UseAnimations from "react-useanimations";
 import loading from "react-useanimations/lib/loading";
 import "./style.css";
+import { motion } from "framer-motion";
 
 const { Option } = Select;
 const { Search } = Input;
@@ -129,17 +130,21 @@ const User = () => {
           style={{ maxWidth: "100vw" }}
         >
           {userList.map((item, idx) => (
-            <Col
-              key={idx}
-              span={12}
-              style={{
-                paddingBottom: "16px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <CardUser userList={item} key={item.id} out favorited />
-            </Col>
+            <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
+              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                <Col
+                  key={idx}
+                  span={12}
+                  style={{
+                    paddingBottom: "16px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CardUser userList={item} key={item.id} out favorited />
+                </Col>
+              </motion.div>
+            </motion.div>
           ))}
         </Row>
       ) : (
