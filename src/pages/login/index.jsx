@@ -46,6 +46,10 @@ const success = () => {
   message.success("Login efetuado com sucesso!");
 };
 
+const error = (err) => {
+  message.error("Login ou senha inválidos. ");
+};
+
 const Login = () => {
   const [isAuthenticated, setAuthentication] = useState(undefined);
 
@@ -64,12 +68,13 @@ const Login = () => {
         dispatch(setTokenThunk(res.data.token));
         history.push("/profile");
       })
-      .catch((err) => setAuthentication(false));
+      .catch((err) => error());
   };
 
   return (
     <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
       <Form
+        style={{ paddingTop: 40 }}
         {...formItemLayout}
         form={form}
         name="register"
@@ -110,7 +115,7 @@ const Login = () => {
             Login
           </Button>
         </Form.Item>
-        {isAuthenticated === false && <span>Login ou senha inválidos.</span>}
+        {/* {isAuthenticated === false && <span>Login ou senha inválidos.</span>} */}
       </Form>
     </motion.div>
   );

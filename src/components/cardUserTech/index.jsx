@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Form, Input, Button, Select, Card } from "antd";
+import { Form, Input, Button, Select, Card, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { useState } from "react";
@@ -45,6 +45,14 @@ const tailFormItemLayout = {
   },
 };
 
+const success = (mess) => {
+  message.success(mess);
+};
+
+const error = (err) => {
+  message.error("Erro: " + err);
+};
+
 const CardUserTech = ({ tech }) => {
   const [clickUpdate, setClickUpdate] = useState(false);
   const token = useSelector((state) => state.token);
@@ -71,9 +79,10 @@ const CardUserTech = ({ tech }) => {
             localStorage.setItem("user", JSON.stringify(res.data));
             dispatch(tryLoginThunk(res.data));
             setClickUpdate(false);
+            success("Tecnologia deletada com sucesso! ");
           });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => error("não foi possível deletar! "));
   };
 
   const onUpdateChange = (value) => {
@@ -120,10 +129,12 @@ const CardUserTech = ({ tech }) => {
             localStorage.setItem("user", JSON.stringify(res.data));
             dispatch(tryLoginThunk(res.data));
             setClickUpdate(false);
+            success("Tecnologia atualizada com sucesso!");
           });
       })
       .catch((err) => {
         setClickUpdate(false);
+        error("não foi possível atualizar!");
       });
   };
 

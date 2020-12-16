@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
 export const MainPageLayout = styled.div`
-  min-height: 100vh;
+  box-sizing: border-box;
+  min-height: 85vh;
   /* height: 100%; */
   background-color: #1d3768;
   display: grid;
   grid-template-rows: 1fr auto;
+  padding-bottom: 30px;
 
   div {
     max-width: 100vw;

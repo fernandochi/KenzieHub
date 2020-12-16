@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Select, Card } from "antd";
+import { Form, Input, Button, Select, Card, message } from "antd";
 import { useState } from "react";
 
 import { useSelector } from "react-redux";
@@ -42,6 +42,14 @@ const tailFormItemLayout = {
       offset: 8,
     },
   },
+};
+
+const success = (mess) => {
+  message.success(mess);
+};
+
+const error = (err) => {
+  message.error("Erro: " + err);
 };
 
 const Technologies = () => {
@@ -97,13 +105,17 @@ const Technologies = () => {
             localStorage.setItem("user", JSON.stringify(res.data));
             dispatch(tryLoginThunk(res.data));
             setErrorTech(false);
+            success("Tecnologia adicionado com sucesso!");
           });
       })
-      .catch((err) => setErrorTech(true));
+      .catch((err) => {
+        setErrorTech(true);
+        error("essa tecnologia já foi adicionado.");
+      });
   };
 
   return (
-    <>
+    <div style={{ paddingBottom: 20 }}>
       <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
         <Form
           ref={formRef}
@@ -155,9 +167,9 @@ const Technologies = () => {
             </Button>
           </Form.Item>
         </Form>
-        {errorTech && (
+        {/* {errorTech && (
           <p style={{ color: "red" }}>Já foi adicionado essa tecnologia.</p>
-        )}
+        )} */}
 
         <Card>
           <h2>Tecnologias Cadastradas</h2>
@@ -167,7 +179,7 @@ const Technologies = () => {
             <CardUserTech tech={tech} key={index} />
           ))}
       </motion.div>
-    </>
+    </div>
   );
 };
 

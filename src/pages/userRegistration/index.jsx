@@ -42,6 +42,11 @@ const tailFormItemLayout = {
 const success = () => {
   message.success("Cadastro efetuado com sucesso!");
 };
+
+const error = (err) => {
+  message.error("Erro: " + err);
+};
+
 const UserRegistration = () => {
   const [createdAccount, setCreatedAccount] = useState(undefined);
 
@@ -58,6 +63,7 @@ const UserRegistration = () => {
       })
       .catch((res) => {
         setCreatedAccount(false);
+        error("não foi possível criar essa conta!");
       });
   };
 
@@ -89,7 +95,7 @@ const UserRegistration = () => {
   };
 
   return (
-    <>
+    <div style={{ paddingBottom: 5 }}>
       <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
         <Form
           ref={formRef}
@@ -97,6 +103,7 @@ const UserRegistration = () => {
           form={form}
           name="register"
           onFinish={onFinish}
+          size="small"
           scrollToFirstError
         >
           <h1>Faça seu Cadastro</h1>
@@ -217,13 +224,13 @@ const UserRegistration = () => {
               Register
             </Button>
           </Form.Item>
-          <h5>
+          {/* <h5>
             {createdAccount && "Conta criada"}
-            {createdAccount === false && "Não foi possível criar sua conta"}
-          </h5>
+            {createdAccount === false && "Não foi possível criar sua conta"} */}
+          {/* </h5> */}
         </Form>
       </motion.div>
-    </>
+    </div>
   );
 };
 

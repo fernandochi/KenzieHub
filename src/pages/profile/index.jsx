@@ -69,7 +69,8 @@ const Profile = () => {
   const history = useHistory();
 
   const token = useSelector((state) => state.token);
-  const user = JSON.parse(localStorage.getItem("user"));
+  // const user = JSON.parse(localStorage.getItem("user"));
+  const user = useSelector((state) => state.user);
 
   const handleAvatar = (ev) => {
     ev.preventDefault();
@@ -99,7 +100,7 @@ const Profile = () => {
         localStorage.setItem("user", JSON.stringify(res.data));
         success();
       })
-      .catch((err) => error(err.message));
+      .catch((err) => error("avatar não foi alterado."));
   };
 
   const handleForm = (data) => {
@@ -128,7 +129,7 @@ const Profile = () => {
         }
       })
       .catch((err) => {
-        setErrorRegister(false);
+        error("dados não atualizados!");
       });
   };
 
@@ -165,8 +166,8 @@ const Profile = () => {
         {errorRegister && <span>Dados Atualizados!</span>}
         {errorRegister === false && <span>Erro</span>}
       </div> */}
-      <div>
-        <CardUser userList={user} out />
+      <div style={{ paddingBottom: 18 }}>
+        <CardUser userList={user} out starts={false} />
 
         <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
           <Form
@@ -177,6 +178,13 @@ const Profile = () => {
             name="register"
             scrollToFirstError
           >
+            <Title
+              style={{ marginLeft: "33%", padding: 15, paddingLeft: 0 }}
+              level={3}
+            >
+              Atualizar dados
+            </Title>
+
             <Form.Item
               name="name"
               label="Nome"
@@ -275,13 +283,11 @@ const Profile = () => {
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Atualizar Dados
+                Enviar
               </Button>
             </Form.Item>
           </Form>
         </motion.div>
-      </div>
-      <div>
         <Form
           // ref={formRef}
           {...formItemLayout}
