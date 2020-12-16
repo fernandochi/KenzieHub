@@ -204,7 +204,7 @@ const CardUserTech = ({ tech }) => {
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Add Tech
+                Atualizar
               </Button>
             </Form.Item>
           </Form>

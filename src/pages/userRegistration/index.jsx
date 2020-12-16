@@ -221,13 +221,9 @@ const UserRegistration = () => {
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
-              Register
+              Cadastrar
             </Button>
           </Form.Item>
-          {/* <h5>
-            {createdAccount && "Conta criada"}
-            {createdAccount === false && "Não foi possível criar sua conta"} */}
-          {/* </h5> */}
         </Form>
       </motion.div>
     </div>

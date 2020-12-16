@@ -98,10 +98,24 @@ const CardUser = ({
   };
 
   return (
-    <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
+    <motion.div
+      style={{
+        minWidth: "254px",
+        maxWidth: "90.90vw",
+        width: "70%",
+        margin: "0 auto",
+      }}
+      animate={{ scale: 0.99 }}
+      transition={{ duration: 1 }}
+    >
       {userList && (
         <Card
-          style={{ minWidth: "280px", maxWidth: "550px", borderRadius: "15px" }}
+          style={{
+            minWidth: "254px",
+            maxWidth: "550px",
+            borderRadius: "15px",
+            minHeight: "100%",
+          }}
         >
           <Meta
             avatar={<Avatar src={userList.avatar_url} />}

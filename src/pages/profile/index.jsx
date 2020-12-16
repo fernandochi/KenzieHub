@@ -151,7 +151,11 @@ const Profile = () => {
 
   return (
     <>
-      <div style={{ paddingBottom: 18 }}>
+      <div
+        style={{
+          paddingBottom: 18,
+        }}
+      >
         <CardUser userList={user} out starts={false} />
 
         <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>

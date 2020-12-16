@@ -126,7 +126,17 @@ const UnauthorizedUsers = () => {
                 justifyContent: "center",
               }}
             >
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <motion.div
+                style={{
+                  minWidth: "254px",
+                  maxWidth: "90.90vw",
+                  width: "70%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
                 <CardUser userList={item} key={item.id} />
               </motion.div>
             </Col>
