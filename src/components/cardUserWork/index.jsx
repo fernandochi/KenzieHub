@@ -203,8 +203,6 @@ const CardUserWork = ({ work }) => {
             </Form.Item>
           </Form>
         </Modal>
-        {/* {clickUpdate && ( */}
-        {/* )} */}
       </Card>
       <Button
         onClick={(evt) => onDelete(evt, work.id)}
