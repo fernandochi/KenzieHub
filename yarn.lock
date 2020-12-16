@@ -2323,6 +2323,13 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
+antd-password-input-strength@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/antd-password-input-strength/-/antd-password-input-strength-1.1.1.tgz#66572ecaecc35140c8ebf47e32f324680d2b6920"
+  integrity sha512-+GlDcjxBaKkReE/O9T+Ff/kgJPJ5YjtcX5ZXnNXf2d2PJQxm8Fjkesmse/nB+WY0z9OQjpy3uNrKvVsZuY4VLg==
+  dependencies:
+    zxcvbn "^4.4.2"
+
 antd@^4.9.2:
   version "4.9.2"
   resolved "https://registry.yarnpkg.com/antd/-/antd-4.9.2.tgz#382a409187fc2e5395ad4b1769bd7a0ec8da62f9"
@@ -12240,3 +12247,8 @@ yup@^0.32.6:
     nanoclone "^0.2.1"
     property-expr "^2.0.4"
     toposort "^2.0.2"
+
+zxcvbn@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/zxcvbn/-/zxcvbn-4.4.2.tgz#28ec17cf09743edcab056ddd8b1b06262cc73c30"
+  integrity sha1-KOwXzwl0PtyrBW3dixsGJizHPDA=

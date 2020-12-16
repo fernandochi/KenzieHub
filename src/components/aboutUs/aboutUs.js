@@ -14,7 +14,7 @@ const devInfo = [
   {
     name: "Davi",
     img: "./images/fotos-dev/Davi.jpg",
-    bio: lorem,
+    bio: "Energia pra codar é o que não falta!",
     title: "Scrum Master",
     linkedin: "https://www.linkedin.com/in/davi-andrade-2366661a7/",
     github: "https://gitlab.com/davi_coffee",
@@ -33,7 +33,7 @@ const devInfo = [
   {
     name: "Klebson",
     img: "./images/fotos-dev/Klebson.jpg",
-    bio: lorem,
+    bio: "Animado cada vez mais a cada dia com os estudos!",
     title: "Desenvolvedor",
     linkedin: " https://www.linkedin.com/in/klebsonferreira",
     github: "https://gitlab.com/klebsonFerreira",
@@ -42,7 +42,7 @@ const devInfo = [
   {
     name: "Lucas",
     img: "./images/fotos-dev/Lucas.jpg",
-    bio: lorem,
+    bio: "Quase veterinário, e entusiasta de JavaScript.",
     title: "Product Owner",
     linkedin: "https://www.linkedin.com/in/lucasfsilva2310/",
     github: "https://github.com/lucasfsilva2310",
