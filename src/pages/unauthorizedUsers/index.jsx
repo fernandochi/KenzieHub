@@ -134,7 +134,7 @@ const UnauthorizedUsers = () => {
                   display: "flex",
                   justifyContent: "center",
                 }}
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.9 }}
               >
                 <CardUser userList={item} key={item.id} />
