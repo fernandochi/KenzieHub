@@ -160,30 +160,6 @@ const UserRegistration = () => {
           >
             <Input.Password />
           </Form.Item>
-
-          <Form.Item
-            name="confirmPassword"
-            label="Confirmar Senha"
-            dependencies={["password"]}
-            hasFeedback
-            rules={[
-              {
-                required: true,
-                message: "Por favor, confirme sua senha!",
-              },
-              ({ getFieldValue }) => ({
-                validator(rule, value) {
-                  if (!value || getFieldValue("password") === value) {
-                    return Promise.resolve();
-                  }
-
-                  return Promise.reject("As senhas devem ser iguais.");
-                },
-              }),
-            ]}
-          >
-            <Input.Password autoComplete="new-password" />
-          </Form.Item>
           <Form.Item
             name="contact"
             label="LinkedIn"
