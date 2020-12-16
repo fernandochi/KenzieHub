@@ -69,22 +69,12 @@ const Profile = () => {
   const history = useHistory();
 
   const token = useSelector((state) => state.token);
-  const user = useSelector((state) => state.user);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleAvatar = (ev) => {
     ev.preventDefault();
 
     const data = new FormData();
-    // console.log(ev);
-
-    // if (!ev.target.files) {
-    //   console.log(ev.target.files);
-    //   if (ev.target.files[0].name.includes(" ") || !!!ev.target.files[0].name) {
-    //     console.log(ev.target.files[0]);
-    //     setImg(false);
-    //     return;
-    //   }
-    // }
 
     data.append("avatar", ev.target.files[0]);
     console.log(ev);
@@ -99,7 +89,7 @@ const Profile = () => {
         localStorage.setItem("user", JSON.stringify(res.data));
         success();
       })
-      .catch((err) => error(err.message));
+      .catch((err) => error("avatar não foi alterado."));
   };
 
   const handleForm = (data) => {
@@ -128,7 +118,7 @@ const Profile = () => {
         }
       })
       .catch((err) => {
-        setErrorRegister(false);
+        error("dados não atualizados!");
       });
   };
 
@@ -161,12 +151,8 @@ const Profile = () => {
 
   return (
     <>
-      {/* <div>
-        {errorRegister && <span>Dados Atualizados!</span>}
-        {errorRegister === false && <span>Erro</span>}
-      </div> */}
-      <div>
-        <CardUser userList={user} out />
+      <div style={{ paddingBottom: 18 }}>
+        <CardUser userList={user} out starts={false} />
 
         <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
           <Form
@@ -177,6 +163,13 @@ const Profile = () => {
             name="register"
             scrollToFirstError
           >
+            <Title
+              style={{ marginLeft: "33%", padding: 15, paddingLeft: 0 }}
+              level={3}
+            >
+              Atualizar dados
+            </Title>
+
             <Form.Item
               name="name"
               label="Nome"
@@ -187,7 +180,7 @@ const Profile = () => {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder={user.name} />
             </Form.Item>
             <Form.Item
               name="email"
@@ -202,7 +195,7 @@ const Profile = () => {
                 },
               ]}
             >
-              <Input autoComplete="username" />
+              <Input autoComplete="email" placeholder={user.email} />
             </Form.Item>
             <Form.Item
               name="course_module"
@@ -232,7 +225,7 @@ const Profile = () => {
               </Select>
             </Form.Item>
             <Form.Item name="bio" label="Sobre mim">
-              <Input.TextArea />
+              <Input.TextArea placeholder={user.bio} />
             </Form.Item>
             <Form.Item
               name="contact"
@@ -247,7 +240,7 @@ const Profile = () => {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder={user.contact} />
             </Form.Item>
             <Form.Item
               name="old_password"
@@ -275,19 +268,12 @@ const Profile = () => {
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Atualizar Dados
+                Enviar
               </Button>
             </Form.Item>
           </Form>
         </motion.div>
-      </div>
-      <div>
-        <Form
-          // ref={formRef}
-          {...formItemLayout}
-          // form={form}
-          name="avatarRegister"
-        >
+        <Form {...formItemLayout} name="avatarRegister">
           <Title
             style={{ marginLeft: "33%", padding: 5, paddingLeft: 0 }}
             level={3}
@@ -299,12 +285,9 @@ const Profile = () => {
               className="inputfile"
               id="avatar"
               name="avatar"
-              // ref={register}
               type="file"
               onChange={handleAvatar}
             ></input>
-            {/* {isImgAvailable === false && <Space>{error()}</Space>} */}
-            {/* {isImgAvailable === true && <Space>{success()}</Space>} */}
           </Form.Item>
         </Form>
       </div>

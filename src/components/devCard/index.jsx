@@ -1,4 +1,9 @@
 import { Card, Avatar } from "antd";
+import {
+  GithubOutlined,
+  LinkedinOutlined,
+  MailOutlined,
+} from "@ant-design/icons";
 
 const DevCard = ({ name, img, title, bio, key, linkedin, github, email }) => {
   const { Meta } = Card;
@@ -9,13 +14,21 @@ const DevCard = ({ name, img, title, bio, key, linkedin, github, email }) => {
       cover={<img alt={`${name} foto`} src={img} style={{ width: "100%" }} />}
       actions={[
         <a href={linkedin} target="_blank" rel="noopener noreferrer">
-          <p>Linkedin</p>
+          <p>
+            <LinkedinOutlined />
+            Linkedin
+          </p>
         </a>,
         <a href={github} target="_blank" rel="noopener noreferrer">
-          <p>Repositório</p>
+          <p>
+            <GithubOutlined /> Repositório
+          </p>
         </a>,
         <a href={`mailto:${email}`}>
-          <p>E-mail</p>
+          <p>
+            <MailOutlined />
+            E-mail
+          </p>
         </a>,
       ]}
       extra={title}

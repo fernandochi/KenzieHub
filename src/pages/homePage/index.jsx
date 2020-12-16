@@ -46,6 +46,17 @@ const HomePage = () => {
           width="250px"
           variants={item}
         />
+        <div>
+          <Button type="primary" onClick={() => history.push("/login")}>
+            Login
+          </Button>
+          <Button
+            type="primary"
+            onClick={() => history.push("/user-registration")}
+          >
+            Cadastrar
+          </Button>
+        </div>
       </motion.div>
       <motion.footer
         className="container"

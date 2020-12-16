@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Form, Input, Button, Card } from "antd";
+import { Form, Input, Button, Card, Modal, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,6 +42,14 @@ const tailFormItemLayout = {
   },
 };
 
+const success = (mess) => {
+  message.success(mess);
+};
+
+const error = (err) => {
+  message.error("Erro: " + err);
+};
+
 const CardUserWork = ({ work }) => {
   const [clickUpdate, setClickUpdate] = useState(false);
   const token = useSelector((state) => state.token);
@@ -68,9 +76,10 @@ const CardUserWork = ({ work }) => {
             localStorage.setItem("user", JSON.stringify(res.data));
             dispatch(tryLoginThunk(res.data));
             setClickUpdate(false);
+            success("Trabalho deletado com sucesso!");
           });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => error("não foi possível deletar o trabalho! "));
   };
 
   const onFinish = (values, info) => {
@@ -101,10 +110,12 @@ const CardUserWork = ({ work }) => {
             localStorage.setItem("user", JSON.stringify(res.data));
             dispatch(tryLoginThunk(res.data));
             setClickUpdate(false);
+            success("Trabalho atualizado com sucesso!");
           });
       })
       .catch((err) => {
         setClickUpdate(false);
+        error("não foi possível atualizar o trabalho!");
       });
   };
 
@@ -116,7 +127,7 @@ const CardUserWork = ({ work }) => {
       <Card type="inner">
         <span>Site: {work.deploy_url}</span>
       </Card>
-      <Card>
+      <Card style={{ display: "flex", justifyContent: "end" }}>
         <Button
           onClick={(evt) => setClickUpdate(!clickUpdate)}
           type="default"
@@ -124,9 +135,15 @@ const CardUserWork = ({ work }) => {
         >
           Update
         </Button>
-        {clickUpdate && (
+        <Modal
+          title="Atualizar dados"
+          visible={clickUpdate}
+          onOk={() => setClickUpdate(!clickUpdate)}
+          onCancel={() => setClickUpdate(!clickUpdate)}
+        >
           <Form
             ref={formRef}
+            initialValues=""
             {...formItemLayout}
             form={form}
             name="register"
@@ -144,7 +161,7 @@ const CardUserWork = ({ work }) => {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder={work.title} />
             </Form.Item>
 
             <Form.Item
@@ -158,7 +175,7 @@ const CardUserWork = ({ work }) => {
                 },
               ]}
             >
-              <Input.TextArea />
+              <Input.TextArea placeholder={work.description} />
             </Form.Item>
 
             <Form.Item
@@ -181,11 +198,13 @@ const CardUserWork = ({ work }) => {
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Add Work
+                Atualizar
               </Button>
             </Form.Item>
           </Form>
-        )}
+        </Modal>
+        {/* {clickUpdate && ( */}
+        {/* )} */}
       </Card>
       <Button
         onClick={(evt) => onDelete(evt, work.id)}

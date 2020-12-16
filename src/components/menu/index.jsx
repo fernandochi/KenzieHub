@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setTokenThunk } from "../../store/modules/token/thunks";
 import { Menu } from "antd";
 import {
   LoginOutlined,
@@ -19,6 +20,7 @@ const MainMenu = () => {
 
   const { pathname } = useLocation();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (pathname.includes("/unauthorized-users")) {
@@ -34,9 +36,11 @@ const MainMenu = () => {
 
   const handleClick = (evt) => {
     if (evt.key === "logout") {
+      console.log("aqui");
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       setCurrent("menu");
+      dispatch(setTokenThunk(""));
       return history.push("/");
     } else if (evt.key === "menu") {
       setCurrent("menu");
@@ -49,14 +53,11 @@ const MainMenu = () => {
   if (!!token) {
     return (
       <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-        <Menu.Item key="/" icon={<HomeOutlined />}>
+        <Menu.Item key="menu" icon={<HomeOutlined />}>
           Home
         </Menu.Item>
         <Menu.Item key="logout" icon={<LogoutOutlined />}>
           Logout
-        </Menu.Item>
-        <Menu.Item key="menu" icon={<HomeOutlined />}>
-          Home
         </Menu.Item>
 
         <SubMenu
@@ -80,7 +81,7 @@ const MainMenu = () => {
   }
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-      <Menu.Item key="/" icon={<HomeOutlined />}>
+      <Menu.Item key="menu" icon={<HomeOutlined />}>
         Home
       </Menu.Item>
       <Menu.Item key="/login" icon={<LoginOutlined />}>
