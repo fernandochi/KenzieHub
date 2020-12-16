@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Card } from "antd";
+import { Form, Input, Button, Card, message } from "antd";
 import { useState } from "react";
 
 import { useSelector } from "react-redux";
@@ -42,6 +42,14 @@ const tailFormItemLayout = {
   },
 };
 
+const success = (mess) => {
+  message.success(mess);
+};
+
+const error = (err) => {
+  message.error("Erro: " + err);
+};
+
 const Portfolio = () => {
   const formRef = React.createRef();
   const [form] = Form.useForm();
@@ -72,14 +80,15 @@ const Portfolio = () => {
           .then((res) => {
             localStorage.setItem("user", JSON.stringify(res.data));
             dispatch(tryLoginThunk(res.data));
-            setErrorWork(false);
+            // setErrorWork(false);
+            success("Trabalho cadastrado com sucesso! ");
           });
       })
-      .catch((err) => setErrorWork(true));
+      .catch((err) => error("não foi possível adicionar trabalho."));
   };
 
   return (
-    <>
+    <div style={{ paddingBottom: 20 }}>
       <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
         <Form
           ref={formRef}
@@ -133,7 +142,7 @@ const Portfolio = () => {
               },
             ]}
           >
-            <Input placeholder="https://kenziehub.me" />
+            <Input placeholder="https://kenziehub.me" value="" />
           </Form.Item>
 
           <Form.Item {...tailFormItemLayout}>
@@ -142,10 +151,10 @@ const Portfolio = () => {
             </Button>
           </Form.Item>
         </Form>
-        <div></div>
+        {/* <div></div>
         {errorWork && (
           <p style={{ color: "red" }}>Houve algum erro de requisição.</p>
-        )}
+        )} */}
         <Card>
           <h2>Profissões Cadastradas</h2>
         </Card>
@@ -154,7 +163,7 @@ const Portfolio = () => {
             <CardUserWork work={work} key={index} />
           ))}
       </motion.div>
-    </>
+    </div>
   );
 };
 

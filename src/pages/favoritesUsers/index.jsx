@@ -16,8 +16,7 @@ const FavoritesUsers = () => {
   }, []);
 
   return (
-    <div>
-      {console.log(listFavorites)}
+    <div style={{ paddingBottom: 20 }}>
       {!!listFavorites.length ? (
         listFavorites.map(({ user }) => {
           return <CardUser userList={user} key={user.id} favorited out />;

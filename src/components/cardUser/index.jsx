@@ -17,7 +17,12 @@ const tabList = [
   },
 ];
 
-const CardUser = ({ userList, out = false, favorited = false }) => {
+const CardUser = ({
+  userList,
+  out = false,
+  favorited = false,
+  starts = true,
+}) => {
   const [key, setKey] = useState("Works");
   const [countStars, setCountStars] = useState(0);
 
@@ -29,15 +34,15 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
         {userList.works.map((item) => {
           return (
             <div key={item.id}>
-              <p>{item.title}</p>
-              <p>{item.description}</p>
+              <p>Título: {item.title}</p>
+              <p>Descrição: {item.description}</p>
               <p>
                 <a
                   href={item.deploy_url}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Link
+                  Link do projeto
                 </a>
               </p>
             </div>
@@ -50,8 +55,8 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
         {userList.techs.map((item) => {
           return (
             <div key={item.id}>
-              <p>{item.title}</p>
-              <p>{item.status}</p>
+              <p>Tecnologia: {item.title}</p>
+              <p>Nível: {item.status}</p>
             </div>
           );
         })}
@@ -94,47 +99,49 @@ const CardUser = ({ userList, out = false, favorited = false }) => {
 
   return (
     <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
-      <Card
-        style={{ width: 400, height: 500, borderRadius: "15px" }}
-      >
-        <Meta
-          avatar={<Avatar src={userList.avatar_url} />}
-          title={userList.name}
-          description={userList.bio}
-        />
-        <Card
-          style={{ marginTop: 10, minWidth: "280px", maxWidth: "550px" }}
-          type="inner"
-          title="Informações: "
-          extra={
-            <Rate
-              count="3"
-              defaultValue="0"
-              value={countStars}
-              onChange={handleChange}
-              disabled={favorited ? false : true}
-            />
-          }
-        >
-          <ul>
-            <li>Email: {userList.email}</li>
-            <li>Course Module: {userList.course_module}</li>
-            <li>Contact: {userList.contact}</li>
-          </ul>
-        </Card>
-        {out && (
+      {userList && (
+        <Card style={{ width: 400, height: 500, borderRadius: "15px" }}>
+          <Meta
+            avatar={<Avatar src={userList.avatar_url} />}
+            title={userList.name}
+            description={userList.bio}
+          />
           <Card
-            style={{ width: "100%", height: "100%" }}
-            tabList={tabList}
-            activeTabKey={key}
-            onTabChange={(key) => {
-              onTabChange(key, "key");
-            }}
+            style={{ marginTop: 10, minWidth: "280px", maxWidth: "550px" }}
+            type="inner"
+            title="Informações: "
+            extra={
+              starts ? (
+                <Rate
+                  count="3"
+                  defaultValue="0"
+                  value={countStars}
+                  onChange={handleChange}
+                  disabled={favorited ? false : true}
+                />
+              ) : null
+            }
           >
-            {contentList[key]}
+            <ul>
+              <li>Email: {userList.email}</li>
+              <li>Course Module: {userList.course_module}</li>
+              <li>Contact: {userList.contact}</li>
+            </ul>
           </Card>
-        )}
-      </Card>
+          {out && (
+            <Card
+              style={{ width: "100%", height: "100%" }}
+              tabList={tabList}
+              activeTabKey={key}
+              onTabChange={(key) => {
+                onTabChange(key, "key");
+              }}
+            >
+              {contentList[key]}
+            </Card>
+          )}
+        </Card>
+      )}
     </motion.div>
   );
 };
