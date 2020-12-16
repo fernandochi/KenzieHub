@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const MainPageLayout = styled.div`
   box-sizing: border-box;
   min-height: 85vh;
-  /* height: 100%; */
   background-color: #1d3768;
   display: grid;
   grid-template-rows: 1fr auto;
@@ -39,6 +38,11 @@ export const MainPageLayout = styled.div`
         width: 120px;
         font-size: 12px;
       }
+    }
+  }
+  @media only screen and (max-width: 375px) {
+    footer {
+      margin-top: 8px;
     }
   }
 `;

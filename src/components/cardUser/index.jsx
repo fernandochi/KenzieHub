@@ -1,6 +1,6 @@
 import { Card, Avatar, Rate, Carousel } from "antd";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateFavoriteThunk } from "../../store/modules/favoritesUsers/thunks";
 import { motion } from "framer-motion";
 
@@ -98,16 +98,32 @@ const CardUser = ({
   };
 
   return (
-    <motion.div animate={{ scale: 0.99 }} transition={{ duration: 1 }}>
+    <motion.div
+      style={{
+        minWidth: "254px",
+        maxWidth: "90.90vw",
+        width: "70%",
+        margin: "0 auto",
+      }}
+      animate={{ scale: 0.99 }}
+      transition={{ duration: 1 }}
+    >
       {userList && (
-        <Card style={{ width: 400, height: 500, borderRadius: "15px" }}>
+        <Card
+          style={{
+            minWidth: "254px",
+            maxWidth: "550px",
+            borderRadius: "15px",
+            minHeight: "100%",
+          }}
+        >
           <Meta
             avatar={<Avatar src={userList.avatar_url} />}
             title={userList.name}
             description={userList.bio}
           />
           <Card
-            style={{ marginTop: 10, minWidth: "280px", maxWidth: "550px" }}
+            style={{ marginTop: 10 }}
             type="inner"
             title="Informações: "
             extra={

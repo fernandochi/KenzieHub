@@ -67,7 +67,7 @@ code {
 }
 
 .ant-card {
-  width: 90%;
+  width: 90% !important;
 }
 
 .ant-card-body {
@@ -89,4 +89,8 @@ li {
     font-size: 0.9rem;
     padding: 0;
   }
+}
+
+ul {
+  padding: 0;
 }

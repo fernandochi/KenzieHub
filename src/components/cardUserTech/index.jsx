@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Form, Input, Button, Select, Card, message } from "antd";
+import { Form, Input, Button, Select, Card, Modal, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { useState } from "react";
@@ -151,7 +151,12 @@ const CardUserTech = ({ tech }) => {
         >
           Update
         </Button>
-        {clickUpdate && (
+        <Modal
+          title="Atualizar dados"
+          visible={clickUpdate}
+          onOk={() => setClickUpdate(!clickUpdate)}
+          onCancel={() => setClickUpdate(!clickUpdate)}
+        >
           <Form
             ref={formRef}
             {...formItemLayout}
@@ -199,11 +204,11 @@ const CardUserTech = ({ tech }) => {
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Add Tech
+                Atualizar
               </Button>
             </Form.Item>
           </Form>
-        )}
+        </Modal>
       </Card>
       <Button
         onClick={(evt) => onDelete(evt, tech.id)}
