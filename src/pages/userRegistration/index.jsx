@@ -226,7 +226,16 @@ const UserRegistration = () => {
               <Option value="four">Quarto módulo (Backend Avançado)</Option>
             </Select>
           </Form.Item>
-          <Form.Item name="bio" label="Sobre mim">
+          <Form.Item
+            name="bio"
+            label="Sobre mim"
+            rules={[
+              {
+                required: true,
+                message: "Por favor, insira uma descrição breve sobre você! :)",
+              },
+            ]}
+          >
             <Input.TextArea />
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
