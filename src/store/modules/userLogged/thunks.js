@@ -7,5 +7,3 @@ const tryLoginThunk = (data) => {
 };
 
 export default tryLoginThunk;
-
-// setAuthentication(false)

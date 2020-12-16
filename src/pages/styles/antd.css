@@ -1,0 +1,10 @@
+.ant-card {
+  width: 70%;
+  margin: 15px auto;
+  border-radius: 15px;
+  border: 1px solid #d4d4d4;
+}
+
+.ant-btn-default {
+  float: right;
+}

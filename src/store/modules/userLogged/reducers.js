@@ -1,4 +1,4 @@
-const loginReducer = (state = {}, action) => {
+const loginReducer = (state = [], action) => {
   switch (action.type) {
     case "feature/login":
       const { data } = action;

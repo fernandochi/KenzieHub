@@ -1,15 +1,30 @@
 import { Modal, Button } from "antd";
 import { useState } from "react";
+// import { RightColorButtons } from "./styles";
 
 const ProjectDetails = () => {
   const [visible, setVisible] = useState(false);
+  function info() {
+    Modal.info({
+      title: "Sobre o Projeto",
+      content: (
+        <div>
+          <p>
+            O <b>KenzieHub</b> é uma rede social para desenvolvedores. Aqui você
+            encontra profissionais e as informações sobre suas carreiras.
+          </p>
+        </div>
+      ),
+      onOk() {},
+    });
+  }
   return (
     <>
-      <Button type="primary" onClick={() => setVisible(true)}>
+      <Button type="primary" onClick={info}>
         Sobre o projeto
       </Button>
       <Modal
-        title="Integrantes do Projeto"
+        title="Sobre o Projeto"
         centered
         visible={visible}
         onOk={() => setVisible(false)}
@@ -17,10 +32,8 @@ const ProjectDetails = () => {
         width={1000}
       >
         <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, quasi.
-          A, enim accusamus! Reprehenderit ullam beatae facilis excepturi
-          molestias et autem, commodi, molestiae eius qui hic quasi! Eius,
-          doloribus voluptate.
+          O <b>KenzieHub</b> é uma rede social para desenvolvedores. Aqui você
+          encontra profissionais e as informações sobre suas carreiras.
         </p>
       </Modal>
     </>

@@ -1,43 +1,48 @@
 import styled from "styled-components";
 
 export const MainPageLayout = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  background-color: #1e3a63;
+  box-sizing: border-box;
+  min-height: 85vh;
+  background-color: #1d3768;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding-bottom: 30px;
 
   div {
+    max-width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 6%;
     h1 {
       color: whitesmoke;
-      font-size: 5rem;
+      font-size: 3.5rem;
+    }
+    div {
+      width: 400px;
+      flex-direction: row;
+      justify-content: space-between;
     }
   }
 
-  header {
-    width: 100%;
-    min-height: 10vh;
-    height: 10%;
-    display: flex;
-    position: absolute;
-    top: 0;
-    background-color: #b4d2ba;
-  }
-
   footer {
-    width: 100%;
+    max-width: 100vw;
+    display: flex;
     justify-content: space-around;
     flex-direction: row;
-    display: flex;
     flex-wrap: nowrap;
-    position: absolute;
-    bottom: 0;
-    margin: 8px;
+    bottom: 8px;
+    margin: 8px 0;
+    @media only screen and (max-width: 375px) {
+      .ant-btn {
+        width: 120px;
+        font-size: 12px;
+      }
+    }
+  }
+  @media only screen and (max-width: 375px) {
+    footer {
+      margin-top: 8px;
+    }
   }
 `;
