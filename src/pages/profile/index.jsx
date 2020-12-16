@@ -266,6 +266,11 @@ const Profile = () => {
                   min: 6,
                   message: "É necessário no mínimo 6 caracteres!",
                 },
+                {
+                  pattern: /(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+                  message:
+                    "A senha precisa conter ao menos uma letra maiúscula, um número e um caracter especial.",
+                },
               ]}
             >
               <Input.Password autoComplete="new-password" />
