@@ -141,7 +141,19 @@ const User = () => {
                 justifyContent: "center",
               }}
             >
-              <CardUser userList={item} key={item.id} out favorited />
+              <motion.div
+                style={{
+                  minWidth: "254px",
+                  maxWidth: "90.90vw",
+                  width: "70%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <CardUser userList={item} key={item.id} out favorited />
+              </motion.div>
             </Col>
           ))}
         </Row>
