@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Input, Button, Select, message } from "antd";
+
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
@@ -145,10 +146,19 @@ const UserRegistration = () => {
                 required: true,
                 message: "Por favor, insira sua senha!",
               },
+              {
+                pattern: /(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+                message:
+                  "A senha precisa conter ao menos uma letra maiúscula, um número e um caracter especial.",
+              },
+              {
+                min: 6,
+                message: "É necessário no mínimo 6 caracteres.",
+              },
             ]}
             hasFeedback
           >
-            <Input.Password autoComplete="new-password" />
+            <Input.Password />
           </Form.Item>
 
           <Form.Item
