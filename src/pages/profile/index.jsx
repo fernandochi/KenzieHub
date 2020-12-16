@@ -77,7 +77,6 @@ const Profile = () => {
     const data = new FormData();
 
     data.append("avatar", ev.target.files[0]);
-    console.log(ev);
     axios
       .patch("https://kenziehub.me/users/avatar", data, {
         headers: {

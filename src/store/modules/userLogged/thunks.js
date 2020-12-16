@@ -1,7 +1,7 @@
 import { tryLogin } from "./actions";
 
 const tryLoginThunk = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch, _getState) => {
     dispatch(tryLogin(data));
   };
 };
